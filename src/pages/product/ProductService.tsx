@@ -2,6 +2,10 @@ import {deleteRequest, getRequest, postRequest, putRequest} from "../../common/h
 import {IProduct} from "./ProductStore";
 
 class ProductService {
+    public getListArchive(params?: any) {
+        return getRequest("/v1/category", params)
+    }
+
     public getList(params?: any) {
         return getRequest("/v1/product", params)
     }

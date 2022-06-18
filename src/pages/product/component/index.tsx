@@ -1,18 +1,27 @@
-import {Button, Card, Space, Popconfirm, Image, Table} from "antd";
+import {Button, Card, Space, Popconfirm, Image, Table, Modal, Form, Upload} from "antd";
 import {IProduct, productStore} from "../ProductStore";
 import {observer} from "mobx-react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import PopupFooter from "../../../common/PopupFooter";
+import ProductArchiveSelect from "../../../common/ProductArchiveSelect";
 
 const Product = () => {
+    const [importVisible, setVisibleImport] = useState<boolean>(false);
+    const [formImport] = Form.useForm();
+    const formData = new FormData();
     const onGetList = async (params?: any) => {
         await productStore.getList(params);
+    }
+    const onClose = () => {
+        setVisibleImport(false);
+        formImport.resetFields();
     }
     useEffect(() => {
         (async () => onGetList())()
     }, [])
     return (
         <Card title={`Sản phẩm`} extra={<Space>
-            <Button>Import</Button>
+            <Button onClick={() => setVisibleImport(true)}>Import</Button>
             <Button>Thêm sản phẩm</Button>
         </Space>}>
             <Table
@@ -62,6 +71,33 @@ const Product = () => {
                     }
                 ]}
             />
+            <Modal
+                onCancel={onClose}
+                visible={importVisible}
+                footer={<PopupFooter
+                    loading={productStore.acLoad}
+                    formId={`import-form`}
+                    showOk/>}
+                title={`Nhập sản phẩm`}>
+                <Form
+                    id={`import-form`}
+                    form={formImport}
+                    labelCol={{sm: 8}}
+                    labelAlign={`left`}>
+                    <Form.Item label={`Danh mục`}>
+                        <ProductArchiveSelect name={`categoryId`}/>
+                    </Form.Item>
+                    <Form.Item label={`File sản phẩm`}>
+                        <Upload
+                            customRequest={({file}) => {
+                                console.log("File", file)
+                            }}
+                            multiple={false}>
+                            <Button>Chọn file</Button>
+                        </Upload>
+                    </Form.Item>
+                </Form>
+            </Modal>
         </Card>
     )
 }

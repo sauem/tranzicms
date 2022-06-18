@@ -16,11 +16,29 @@ export interface IProduct {
 class ProductStore {
     @observable pList: Array<IProduct> = [];
     @observable pPage: IPaginate | undefined;
+    @observable archiveList: any = [];
+    @observable archivePage: IPaginate | undefined;
     @observable fetching: boolean = false;
     @observable acLoad: boolean = false;
 
     constructor() {
         makeObservable(this);
+    }
+
+    @action
+    async getArchive(params: any) {
+        this.fetching = true;
+        const response = await productService.getListArchive({
+            ...params,
+            type: 'PRODUCT'
+        });
+        this.fetching = false;
+        if (response.status == HttpStatusCode.SUCCESS) {
+            this.archiveList = response.body.data;
+            this.archivePage = Helper.toPage(response.body.metadata);
+        } else {
+            message.error(response.body.message);
+        }
     }
 
     @action
