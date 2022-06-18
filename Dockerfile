@@ -4,6 +4,5 @@ COPY ./build /usr/share/nginx/html
 COPY ./ /app
 WORKDIR /app
 
-RUN mkdir /public/assets/uploads
 RUN chown -R nobody:nobody /app
-RUN chown -R nobody:nobody /public/assets/uploads
+#RUN chown -R nobody:nobody /public/assets/uploads
