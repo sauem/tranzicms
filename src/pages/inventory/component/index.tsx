@@ -41,13 +41,13 @@ const Inventory = () => {
                                                     src={'error'}
                                                 />
                                                 <Space size={`small`} direction={`vertical`}>
-                                                    <span>{p.name}</span>
-                                                    <span>{p.sku}</span>
+                                                    <span>{p?.name}</span>
+                                                    <span>{p?.sku}</span>
                                                 </Space>
                                             </Space>
                                         }
                                     },
-                                    {title: 'Kho', dataIndex: 'warehouse', key: 'warehouse', render: w => w.name},
+                                    {title: 'Kho', dataIndex: 'warehouse', key: 'warehouse', render: w => w?.name},
                                     {
                                         title: 'Khả dụng',
                                         dataIndex: 'handInStock',
