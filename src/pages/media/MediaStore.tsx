@@ -1,25 +1,15 @@
 import {action, makeObservable, observable} from "mobx";
-import {mediaService} from "../media/MediaService";
+import {IPaginate} from "../../common/Contants";
+import {mediaService} from "./MediaService";
 import HttpStatusCode from "../../common/constants/HttpErrorCode";
 import {message} from "antd";
-import {IPaginate} from "../../common/Contants";
-import Helper from "../../common/Helper";
-import {bannerService} from "./BannerService";
 
-export interface IBanner {
-    title: string,
-    subTitle: string,
-    description: string,
-    alt: string,
-    position: any,
-    sortOrder: number,
-    state: any,
-    device: any,
-    type: any
+export interface IMedia {
+
 }
 
-class BannerStore {
-    @observable list: Array<IBanner> = [];
+class MediaStore {
+    @observable list: Array<IMedia> = []
     @observable page: IPaginate | undefined;
     @observable fetching: boolean = false;
     @observable acLoad: boolean = false;
@@ -31,23 +21,22 @@ class BannerStore {
     @action
     async getList(params?: any) {
         this.fetching = true;
-        const response = await bannerService.getList(params);
+        const response = await mediaService.getList(params);
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
-            this.list = response.body.data;
-            this.page = Helper.toPage(response.body.metadata)
+
         } else {
-            message.error(response.body.message);
+
         }
     }
 
     @action
-    async create(banner: IBanner) {
+    async upload(formData: any) {
         this.fetching = true;
-        const response = await bannerService.create(banner);
+        const response = await mediaService.upload(formData);
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
-            message.success("Tạo banner thành công!")
+            message.success("Tải media thành công!")
             await this.getList();
         } else {
             message.error(response.body.message);
@@ -56,12 +45,12 @@ class BannerStore {
     }
 
     @action
-    async update(bannerId: string, banner: IBanner) {
+    async update(mediaId: string, params?: any) {
         this.fetching = true;
-        const response = await bannerService.update(bannerId, banner);
+        const response = await mediaService.update(mediaId, params);
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
-            message.success("Cập nhật banner thành công!");
+            message.success("Cập nhật media thành công!");
             await this.getList();
         } else {
             message.error(response.body.message);
@@ -69,12 +58,12 @@ class BannerStore {
     }
 
     @action
-    async delete(bannerId: string) {
+    async delete(mediaId: string) {
         this.fetching = true;
-        const response = await bannerService.delete(bannerId);
+        const response = await mediaService.delete(mediaId);
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
-            message.success("Xoá banner thành công!");
+            message.success("Xoá media thành công!");
             await this.getList();
         } else {
             message.error(response.body.message);
@@ -82,4 +71,4 @@ class BannerStore {
     }
 }
 
-export const bannerStore = new BannerStore;
+export const mediaStore = new MediaStore();

@@ -85,7 +85,9 @@ function App() {
                         </div>
                     </Header>
                     <Content style={{margin: '80px 0 0 16px', overflowX: 'hidden'}}>
-                        <ContentRouter/>
+                        <div className={`container-fluid`}>
+                            <ContentRouter/>
+                        </div>
                     </Content>
                     <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>

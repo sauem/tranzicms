@@ -69,12 +69,8 @@ class Helper {
             case 'active':
             case 'ACTIVE':
                 return <Badge status="success" text="Active"/>
-            case 'COMING':
-                return <Badge status="processing" text="COMING"/>
-            case 'OFF':
-                return <Badge status="default" text="OFF"/>
             case 'INACTIVE':
-                return <Badge status="default" text="INACTIVE"/>
+                return <Badge status="default" text="Inactive"/>
             default:
                 return <Badge status="default" text="Disabled"/>
         }
@@ -86,6 +82,7 @@ class Helper {
         const result = parser.getResult();
         return `${result.os.name}/${result.os.version} - ${result.browser.name}`
     }
+
 }
 
 export default Helper;

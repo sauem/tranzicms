@@ -51,7 +51,7 @@ const Product = () => {
                         }
                     },
                     {title: 'Nhà sản xuất', dataIndex: 'manufacturer', key: 'manufacturer'},
-                    {title: 'Danh mục', dataIndex: 'category', key: 'category', render: category => category.name},
+                    {title: 'Danh mục', dataIndex: 'category', key: 'category', render: category => category?.name},
                     {
                         title: 'Thao tác',
                         render: raw => {

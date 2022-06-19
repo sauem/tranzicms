@@ -46,7 +46,7 @@ const adminRouters = [
                 path: '/warehouse',
             },
             {
-                name: 'Vận đơn',
+                name: 'Tồn kho',
                 path: '/inventory',
             }
         ]

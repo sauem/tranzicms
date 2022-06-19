@@ -10,11 +10,11 @@ export const TOKEN_EXPIRE_DAYS: number = 16;
 export const ROLES = [
     {title: 'Admin', value: Role.ROLE_ADMIN}
 ];
-export const STATUS_ACTIVE = true;
-export const STATUS_INACTIVE = false;
+export const STATUS_ACTIVE = 'ACTIVE';
+export const STATUS_INACTIVE = 'INACTIVE'
 export const STATUS = [
-    {title: 'Kích hoạt', value: STATUS_ACTIVE},
-    {title: 'Ngưng hoạt động', value: STATUS_INACTIVE},
+    {title: 'Hiển thị', value: STATUS_ACTIVE},
+    {title: 'Ẩn', value: STATUS_INACTIVE},
 ]
 
 export interface IPaginate {
@@ -22,3 +22,28 @@ export interface IPaginate {
     pageSize: number,
     total: number
 }
+
+export const BANNER_TYPE_VIDEO = 'VIDEO';
+export const BANNER_TYPE_IMAGE = 'VIDEO';
+export const BANNER_DEVICE_DESKTOP = 'DESKTOP';
+export const BANNER_DEVICE_MOBILE = 'MOBILE';
+export const BANNER_HOME_SLIDER = 'HOME_SLIDER';
+export const BANNER_HOME_BANNER = 'HOME_BANNER';
+export const BANNER_PARTNER = 'PARTNER';
+export const BANNER_SIDEBAR_LEFT = 'SIDEBAR_LEFT';
+export const BANNER_SIDEBAR_RIGHT = 'SIDEBAR_RIGHT';
+export const BANNER_TYPES = [
+    {title: 'Video', value: BANNER_TYPE_VIDEO},
+    {title: 'Image', value: BANNER_TYPE_IMAGE},
+];
+export const BANNER_POSITION = [
+    {title: 'Slider trang chủ', value: BANNER_HOME_SLIDER},
+    {title: 'Banner trang chủ', value: BANNER_HOME_BANNER},
+    {title: 'Logo nhà sản xuất', value: BANNER_PARTNER},
+    {title: 'Sidebar trái', value: BANNER_SIDEBAR_LEFT},
+    {title: 'Sidebar phải', value: BANNER_SIDEBAR_RIGHT}
+];
+export const BANNER_DEVICE = [
+    {title: 'Desktop', value: BANNER_DEVICE_DESKTOP},
+    {title: 'Mobile', value: BANNER_DEVICE_MOBILE},
+];
