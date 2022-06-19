@@ -1,4 +1,4 @@
-import {deleteRequest, getRequest, postRequest, putRequest} from "../../common/helpers/RequestHelper";
+import {apiFileRequest, deleteRequest, getRequest, postRequest, putRequest} from "../../common/helpers/RequestHelper";
 import {IProduct} from "./ProductStore";
 
 class ProductService {
@@ -20,6 +20,9 @@ class ProductService {
 
     public delete(productId: string) {
         return deleteRequest(`/v1/product/${productId}`);
+    }
+    public import(data: any) {
+        return apiFileRequest(`/v1/upload`, data);
     }
 }
 

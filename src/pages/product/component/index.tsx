@@ -16,6 +16,11 @@ const Product = () => {
         setVisibleImport(false);
         formImport.resetFields();
     }
+    const onFinish = async (data: any) => {
+        formData.append("categoryId", data.categoryId);
+        formData.append("importType", 'UPLOAD_PRODUCT');
+        await productStore.import(formData).finally(onClose)
+    }
     useEffect(() => {
         (async () => onGetList())()
     }, [])
@@ -54,14 +59,16 @@ const Product = () => {
                     {title: 'Danh mục', dataIndex: 'category', key: 'category', render: category => category?.name},
                     {
                         title: 'Thao tác',
-                        render: raw => {
+                        dataIndex: 'id',
+                        key: 'id',
+                        render: (id, raw) => {
                             return <Space>
                                 <Button size="small">$
                                     Price</Button>
-                                <a className="ant-btn ant-btn-sm" href={`/product/update?id=${raw.id}`}
+                                <a className="ant-btn ant-btn-sm" href={`/product/update?id=${id}`}
                                    type={`deafault`}><i
                                     className="icon icon-edit mr-1"/> Sửa</a>
-                                <Popconfirm title="Xoá sản phẩm này?">
+                                <Popconfirm title="Xoá sản phẩm này?" onConfirm={() => productStore.delete(id)}>
                                     <Button danger
                                             type={`default`} size="small"><i
                                         className="icon icon-trash mr-1"/> Xóa</Button>
@@ -80,6 +87,7 @@ const Product = () => {
                     showOk/>}
                 title={`Nhập sản phẩm`}>
                 <Form
+                    onFinish={onFinish}
                     id={`import-form`}
                     form={formImport}
                     labelCol={{sm: 8}}
@@ -89,8 +97,11 @@ const Product = () => {
                     </Form.Item>
                     <Form.Item label={`File sản phẩm`}>
                         <Upload
-                            customRequest={({file}) => {
-                                console.log("File", file)
+                            customRequest={({file, onSuccess}: any) => {
+                                formData.append("file", file)
+                                setTimeout(() => {
+                                    onSuccess("ok");
+                                }, 1000);
                             }}
                             multiple={false}>
                             <Button>Chọn file</Button>

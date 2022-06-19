@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {Form, Select} from "antd";
 import {productStore} from "../pages/product/ProductStore";
+import {observer} from "mobx-react";
 
 
 const ProductArchiveSelect = (props: { name: string }) => {
@@ -21,4 +22,4 @@ const ProductArchiveSelect = (props: { name: string }) => {
         </Form.Item>
     )
 }
-export default ProductArchiveSelect;
+export default observer(ProductArchiveSelect);

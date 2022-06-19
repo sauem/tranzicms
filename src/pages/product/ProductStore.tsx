@@ -92,6 +92,19 @@ class ProductStore {
             message.error(response.body.message);
         }
     }
+
+    @action
+    async import(data:any){
+        this.acLoad = true;
+        const response = await productService.import(data);
+        this.acLoad = false;
+        if (response.status == HttpStatusCode.SUCCESS) {
+            message.success("Nhập sản phẩm thành công!");
+            await this.getList();
+        } else {
+            message.error(response.body.message);
+        }
+    }
 }
 
 export const productStore = new ProductStore();
