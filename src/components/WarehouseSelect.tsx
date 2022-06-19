@@ -2,7 +2,7 @@ import {Form, Select} from "antd";
 import {useEffect} from "react";
 import {warehouseStore} from "../pages/warehouse/WarehouseStore";
 
-const WarehouseSelect = () => {
+const WarehouseSelect = (props: {name: string}) => {
 
     useEffect(() => {
         (async () => warehouseStore.getList({page: false}))()
@@ -11,7 +11,7 @@ const WarehouseSelect = () => {
         <Form.Item
             noStyle
             rules={[{required: true}]}
-            name={`warehouseId`}>
+            name={props.name}>
             <Select
                 allowClear
                 showSearch

@@ -1,6 +1,6 @@
 import {observer} from "mobx-react";
 import BreadPath from "../../../common/BreadPath";
-import {Card, Spin, Table, Tabs} from "antd";
+import {Card, Space, Spin, Image, Table, Tabs} from "antd";
 import {inventoryStore} from "../InventoryStore";
 import {useEffect} from "react";
 import {toNumber} from "../../../common/helpers/Utils";
@@ -27,9 +27,26 @@ const Inventory = () => {
                             <Table
                                 dataSource={inventoryStore.list}
                                 pagination={inventoryStore.page}
-                                onChange={({current, pageSize}: any) => onGetList({page: (current - 1), size: pageSize})}
+                                onChange={({current, pageSize}: any) => onGetList({
+                                    page: (current - 1),
+                                    size: pageSize
+                                })}
                                 columns={[
-                                    {title: 'Sản phẩm', dataIndex: 'product', key: 'product', render: p => p.name},
+                                    {
+                                        title: 'Sản phẩm', dataIndex: 'product', key: 'product', render: p => {
+                                            return <Space>
+                                                <Image
+                                                    width={50}
+                                                    height={50}
+                                                    src={'error'}
+                                                />
+                                                <Space size={`small`} direction={`vertical`}>
+                                                    <span>{p.name}</span>
+                                                    <span>{p.sku}</span>
+                                                </Space>
+                                            </Space>
+                                        }
+                                    },
                                     {title: 'Kho', dataIndex: 'warehouse', key: 'warehouse', render: w => w.name},
                                     {
                                         title: 'Khả dụng',

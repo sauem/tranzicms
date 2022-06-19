@@ -7,7 +7,7 @@ import {message} from "antd";
 
 export interface IProductStock {
     sku: string,
-    warehouseId: string,
+    warehouseCode: string,
     productId: string,
     committed: number,
     description?: string
@@ -87,9 +87,9 @@ class WarehouseStore {
     }
 
     @action
-    async importSingleProduct(warehouseId: string, stock: IProductStock) {
+    async importSingleProduct(warehouseCode: string, stock: IProductStock) {
         this.acLoad = true;
-        const response = await warehouseService.singleProductImport(warehouseId, stock);
+        const response = await warehouseService.singleProductImport(warehouseCode, stock);
         this.acLoad = false;
         if (response.status == HttpStatusCode.SUCCESS) {
             await this.getList();

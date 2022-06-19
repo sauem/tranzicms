@@ -32,7 +32,7 @@ const Warehouse = () => {
         }
     }
     const submitSingle = async (data: IProductStock) => {
-        await warehouseStore.importSingleProduct(data.warehouseId, data);
+        await warehouseStore.importSingleProduct(data.warehouseCode, data);
     }
     const onImport = async (data: any) => {
         formData.append("categoryId", data.warehouseId);
@@ -129,8 +129,9 @@ const Warehouse = () => {
                     visible={whImport}
                     footer={
                         <PopupFooter
+                            loading={warehouseStore.acLoad}
                             onClose={onClose}
-                            formId={`form-warehouse`}
+                            formId={`form-import`}
                         />}
                     title={`Nhập kho sản phẩm`}>
 
@@ -143,11 +144,11 @@ const Warehouse = () => {
                                 labelCol={{sm: 8}}
                                 labelAlign={`left`}
                                 onFinish={submitSingle}
-                                id={`form-warehouse`}
+                                id={`form-import`}
                                 form={form}>
                                 <Form.Item
                                     label={`Chọn kho`}>
-                                    <WarehouseSelect/>
+                                    <WarehouseSelect name={`warehouseCode`}/>
                                 </Form.Item>
                                 <Form.Item
                                     rules={[{required: true}]}
@@ -171,11 +172,11 @@ const Warehouse = () => {
                                 labelCol={{sm: 8}}
                                 labelAlign={`left`}
                                 onFinish={onImport}
-                                id={`form-warehouse`}
+                                id={`form-import`}
                                 form={form}>
                                 <Form.Item
                                     label={`Chọn kho`}>
-                                    <WarehouseSelect/>
+                                    <WarehouseSelect name={`warehouseCode`}/>
                                 </Form.Item>
                                 <Form.Item
                                     rules={[{required: true}]}

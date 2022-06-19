@@ -18,8 +18,8 @@ class WarehouseService {
         return deleteRequest(`/v1/warehouse/${warehouseId}`);
     }
 
-    public singleProductImport(warehouseId: string, stock: IProductStock) {
-        return postRequest(`/v1/warehouse/${warehouseId}/import`, stock)
+    public singleProductImport(warehouseCode: string, stock: IProductStock) {
+        return postRequest(`/v1/warehouse/${warehouseCode}/import`, stock)
     }
 
     public multiProductImport(warehouseId: string, data: any) {
