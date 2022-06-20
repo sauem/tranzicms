@@ -15,7 +15,8 @@ export interface IBanner {
     sortOrder: number,
     state: any,
     device: any,
-    type: any
+    type: any,
+    image: any
 }
 
 class BannerStore {

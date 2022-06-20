@@ -18,6 +18,12 @@ const adminRouters = [
         icon: 'icon-shopping-cart'
     },
     {
+        name: 'Kho ảnh',
+        path: '/media',
+        extract: true,
+        icon: 'icon-image'
+    },
+    {
         name: 'Sản phẩm',
         extract: true,
         icon: 'icon-pricing-table',

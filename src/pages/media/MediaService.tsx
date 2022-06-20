@@ -1,4 +1,4 @@
-import {apiFileRequest, deleteRequest, getRequest, putRequest} from "../../common/helpers/RequestHelper";
+import {apiFileRequest, deleteRequest, getRequest, postRequest, putRequest} from "../../common/helpers/RequestHelper";
 import {IMedia} from "./MediaStore";
 
 class MediaService {
@@ -16,6 +16,10 @@ class MediaService {
 
     public delete(mediaId: string) {
         return deleteRequest(`/v1/media/${mediaId}`)
+    }
+
+    public createFolder(data: any) {
+        return postRequest("/v1/media/createFolder", data);
     }
 }
 

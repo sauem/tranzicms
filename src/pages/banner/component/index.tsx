@@ -15,6 +15,7 @@ import {
 import {bannerStore, IBanner} from "../BannerStore";
 import Helper from "../../../common/Helper";
 import {archiveStore} from "../../archive/ArchiveStore";
+import MediaButton from "../../media/MediaButton";
 
 const Banner = () => {
     const [visible, setVisible] = useState<boolean>(false);
@@ -68,6 +69,7 @@ const Banner = () => {
                                 <Image
                                     width={80}
                                     height={60}
+                                    src={raw.image?.path ?? 'error'}
                                 />
                                 <Space direction={`vertical`}>
                                     <span>{raw.title}</span>
@@ -81,7 +83,7 @@ const Banner = () => {
                     {title: 'Vị trí', dataIndex: 'position', key: 'position'},
                     {title: 'Trạng thái', dataIndex: 'state', key: 'state', render: stt => Helper.renderStt(stt)},
                     {
-                        title: 'Hành động', dataIndex: 'id', key: 'id', render: (id,raw) => {
+                        title: 'Hành động', dataIndex: 'id', key: 'id', render: (id, raw) => {
                             return <Space>
                                 <Button onClick={() => {
                                     setUpdate(true);
@@ -118,6 +120,16 @@ const Banner = () => {
                         hidden
                         name={`id`}>
                         <Input/>
+                    </Form.Item>
+                    <Form.Item
+                        rules={[{required:true}]}
+                        name={`imageId`}
+                        label={`Ảnh`}>
+                        <MediaButton
+                            name={`imageId`}
+                            field={`image`}
+                            form={form}
+                            init={isUpdate}/>
                     </Form.Item>
 
                     <Form.Item

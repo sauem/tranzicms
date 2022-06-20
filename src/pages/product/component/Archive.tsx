@@ -16,7 +16,10 @@ const ProductArchive = () => {
     const [isUpdate, setUpdate] = useState<boolean>(false);
     const [form] = Form.useForm();
     const onGetList = async (params?: any) => {
-        await productStore.getArchive(params);
+        await archiveStore.getList({
+            ...params,
+            type: 'PRODUCT'
+        });
     }
     const onFinish = async (data: any) => {
         if (!isUpdate) {
@@ -47,13 +50,13 @@ const ProductArchive = () => {
                 {name: 'Danh mục', link: '/product/archive'}
             ]}/>
 
-            <Spin spinning={productStore.fetching}>
+            <Spin spinning={archiveStore.fetching}>
                 <div className={`text-right mb-3`}>
                     <Button onClick={() => setVisible(true)}>Tạo danh mục</Button>
                 </div>
                 <Table
-                    dataSource={productStore.archiveList}
-                    pagination={productStore.archivePage}
+                    dataSource={archiveStore.list}
+                    pagination={archiveStore.page}
                     onChange={({current, pageSize}: any) => onGetList({page: (current - 1), size: pageSize})}
                     columns={[
                         {title: 'Tên danh mục', dataIndex: 'name', key: 'name'},

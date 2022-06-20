@@ -11,6 +11,8 @@ import Manufacturer from "../pages/manufacturer/component";
 import ProductArchive from "../pages/product/component/Archive";
 import ArticleArchive from "../pages/article/component/ArticleArchive";
 import Inventory from "../pages/inventory/component";
+import ArticleForm from "../pages/article/component/ArticleForm";
+import MediaManager from "../pages/media/MediaManager";
 
 const ContentRouter = (props: any) => {
     return (
@@ -26,6 +28,9 @@ const ContentRouter = (props: any) => {
             <Route path={'/order'} element={<Order/>}/>
             <Route path={'/article'} element={<Article/>}/>
             <Route path={'/article/archive'} element={<ArticleArchive/>}/>
+            <Route path={'/article/create'} element={<ArticleForm/>}/>
+            <Route path={'/article/:id'} element={<ArticleForm/>}/>
+            <Route path={'/media'} element={<MediaManager/>}/>
             <Route
                 path="*"
                 element={

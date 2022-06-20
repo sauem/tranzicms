@@ -3,9 +3,14 @@ import {IPaginate} from "../../common/Contants";
 import {mediaService} from "./MediaService";
 import HttpStatusCode from "../../common/constants/HttpErrorCode";
 import {message} from "antd";
+import Helper from "../../common/Helper";
 
 export interface IMedia {
-
+    id?: string,
+    path: string,
+    objectType: string,
+    name: string,
+    mediaType: string,
 }
 
 class MediaStore {
@@ -21,12 +26,16 @@ class MediaStore {
     @action
     async getList(params?: any) {
         this.fetching = true;
-        const response = await mediaService.getList(params);
+        const response = await mediaService.getList({
+            ...params,
+            size: 56
+        });
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
-
+            this.list = response.body.data;
+            this.page = Helper.toPage(response.body.metadata);
         } else {
-
+            message.error(response.body.message);
         }
     }
 

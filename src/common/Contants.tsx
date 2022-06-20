@@ -47,3 +47,20 @@ export const BANNER_DEVICE = [
     {title: 'Desktop', value: BANNER_DEVICE_DESKTOP},
     {title: 'Mobile', value: BANNER_DEVICE_MOBILE},
 ];
+
+
+export const ARTICLE_TYPE_VIDEO = 'VIDEO';
+export const ARTICLE_TYPE_DEFAULT = 'ARTICLE';
+export const ARTICLE_TYPE = [
+    {title: 'Bài viết', value: ARTICLE_TYPE_DEFAULT},
+    {title: 'Video', value: ARTICLE_TYPE_VIDEO},
+]
+
+export const MEDIA_TYPE_IMAGE = "IMAGE";
+export const MEDIA_TYPE_VIDEO = "VIDEO";
+export const MEDIA_TYPE_PDF = "PDF";
+export const MEDIA_TYPE_EXCEL = "EXCEL";
+export const MEDIA_TYPE_ZIP = "ZIP";
+export const MEDIA_TYPE_GIF = "GIF";
+export const MEDIA_TYPE_DOCX = "DOCX";
+export const MEDIA_TYPE_FOLDER = "FOLDER";

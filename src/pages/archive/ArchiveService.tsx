@@ -1,7 +1,11 @@
 import {ICategory} from "./ArchiveStore";
-import {deleteRequest, postRequest, putRequest} from "../../common/helpers/RequestHelper";
+import {deleteRequest, getRequest, postRequest, putRequest} from "../../common/helpers/RequestHelper";
 
 class ArchiveService {
+    public getList(params?: any) {
+        return getRequest("/v1/category", params);
+    }
+
     public create(category: ICategory) {
         return postRequest("/v1/category", category);
     }
