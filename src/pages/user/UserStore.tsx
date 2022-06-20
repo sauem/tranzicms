@@ -5,6 +5,8 @@ import {message} from "antd";
 import Helper from "../../common/Helper";
 import {Role} from "../../common/constants/Role";
 import {inject} from "mobx-react";
+import StorageService from "../../common/helpers/StorageService";
+import {navigatorUtils} from "../../common/helpers/NavigatorUtils";
 
 export interface IUser {
     "fullName": string,
@@ -62,6 +64,7 @@ class UserStore {
     async getProfile() {
         this.fetching = true
         const response = await userService.getProfile();
+        this.fetching = false
         if (response.status === HttpStatusCode.SUCCESS) {
             this.profile = {
                 userId: response.body.id,
@@ -70,8 +73,11 @@ class UserStore {
                 agent: response.body.agent,
                 roles: response.body.roles,
             }
+        } else {
+            userStore.profile = null;
+            StorageService.removeToken();
+            navigatorUtils.redirect('/')
         }
-        this.fetching = false
     }
 
     @action
