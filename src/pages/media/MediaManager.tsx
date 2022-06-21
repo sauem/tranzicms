@@ -1,17 +1,35 @@
 import {observer} from "mobx-react";
 import BreadPath from "../../common/BreadPath";
-import {Button, Card, Checkbox, Col, Form, Image, Input, Modal, Row, Select, Space, Tabs, Tooltip} from "antd";
-import {useEffect, useState} from "react";
+import {
+    Breadcrumb,
+    Button,
+    Col,
+    Form,
+    Image,
+    Input, message,
+    Modal,
+    Row,
+    Select,
+    Space,
+    Spin,
+    Tabs,
+    Tooltip,
+    Upload
+} from "antd";
+import React, {useEffect, useState} from "react";
 import {IMedia, mediaStore} from "./MediaStore";
 import PopupFooter from "../../common/PopupFooter";
 import {mediaService} from "./MediaService";
 import {
     MEDIA_TYPE_DOCX,
     MEDIA_TYPE_EXCEL,
-    MEDIA_TYPE_FOLDER, MEDIA_TYPE_GIF, MEDIA_TYPE_IMAGE,
+    MEDIA_TYPE_FOLDER,
+    MEDIA_TYPE_GIF,
     MEDIA_TYPE_PDF,
-    MEDIA_TYPE_VIDEO, MEDIA_TYPE_ZIP
+    MEDIA_TYPE_VIDEO,
+    MEDIA_TYPE_ZIP
 } from "../../common/Contants";
+import HttpStatusCode from "../../common/constants/HttpErrorCode";
 
 export interface IMediaProps {
     callback?: any,
@@ -25,16 +43,32 @@ const MediaManager = (props: IMediaProps) => {
     const [formSearch] = Form.useForm();
     const [formFolder] = Form.useForm();
     const [mediaSelected, setMediaSelected] = useState<Array<any>>([]);
+    const [path, setPath] = useState<Array<string>>([]);
     const [mFolder, setMFolder] = useState(false);
     const onGetList = async (params?: any) => {
-        await mediaStore.getList(params);
+        await mediaStore.getList({
+            folder: null,
+            ...params
+        });
     }
     const onClose = () => {
         setMFolder(false);
         formFolder.resetFields();
     }
     const onCreateFolder = async (data: any) => {
-        await mediaService.createFolder(data);
+        const response = await mediaService.createFolder({
+            ...data,
+            subPath: path
+        });
+        if (response.status == HttpStatusCode.SUCCESS) {
+            message.success("Tạo danh mục thành công!");
+            setMFolder(false);
+            await onGetList({
+                folder: path[path.length - 1]
+            })
+        } else {
+            message.error(response.body.message);
+        }
     }
     const onSelectItem = (media: IMedia) => {
         if (callback && !multiple) {
@@ -99,72 +133,117 @@ const MediaManager = (props: IMediaProps) => {
                                 <Button htmlType={`submit`}>Lọc</Button>
                             </Form>
                         </div>
-
-                        <div className={`mt-3 p-1`}>
-                            <Row gutter={[8, 24]}>
-                                {mediaStore.list && mediaStore.list.map((media: IMedia, index: number) => {
-                                    let url = media.path;
-                                    switch (media.mediaType) {
-                                        case MEDIA_TYPE_FOLDER:
-                                            url = '/img/folder.png';
-                                            break;
-                                        case MEDIA_TYPE_PDF:
-                                            url = '/img/pdf.png';
-                                            break;
-                                        case MEDIA_TYPE_VIDEO:
-                                            url = '/img/video.png';
-                                            break;
-                                        case MEDIA_TYPE_EXCEL:
-                                            url = '/img/excel.png';
-                                            break;
-                                        case MEDIA_TYPE_DOCX:
-                                            url = '/img/doc.png';
-                                            break;
-                                        case MEDIA_TYPE_ZIP:
-                                            url = '/img/zip.png';
-                                            break;
-                                        case MEDIA_TYPE_GIF:
-                                            url = '/img/gif.png';
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    return <Col sm={3}>
-                                        <div onClick={async () => {
-                                            if (media.mediaType == MEDIA_TYPE_FOLDER) {
-                                                await onGetList({
-                                                    type: media.mediaType,
-                                                    folder: media.name
-                                                });
-                                            } else {
-                                                onSelectItem(media)
-                                            }
-                                        }}
-                                             className={`media-item  ${media.mediaType === MEDIA_TYPE_FOLDER && 'isFolder'}`}>
-                                            {mediaSelected.includes(media.id) &&
-                                            <i className={`icon check-item icon-check-square-o`}/>}
-                                            <div className={`img`}>
-                                                <Tooltip title={media.name}>
-                                                    <Image
-                                                        preview={false}
-                                                        width={70}
-                                                        height={`100%`}
-                                                        src={url ?? `error`}
-                                                        fallback={`/img/unknow.png`}
-                                                    />
-                                                </Tooltip>
-                                            </div>
-                                            <div className={`action`}>
-                                                <span className={`name`}>{media.name}</span>
-                                            </div>
-                                        </div>
-                                    </Col>
+                        <Spin spinning={mediaStore.fetching}>
+                            <Breadcrumb style={{margin: '16px 0'}}>
+                                <Breadcrumb.Item>
+                                    <Button onClick={async () => {
+                                        setPath([])
+                                        await onGetList();
+                                    }} type={`link`}>Medias</Button>
+                                </Breadcrumb.Item>
+                                {path && path.map((item: any, index: number) => {
+                                    return <Breadcrumb.Item key={index}>
+                                        <Button disabled={path[path.length - 1] === item} onClick={async () => {
+                                            setPath(path.slice(0, index + 1))
+                                            await onGetList({
+                                                //  type: media.mediaType,
+                                                folder: item
+                                            })
+                                        }} type={`link`}>{item}</Button>
+                                    </Breadcrumb.Item>
                                 })}
-                            </Row>
-                        </div>
+                            </Breadcrumb>
+                            <div className={`mt-3 p-1`}>
+                                <Row gutter={[8, 24]}>
+                                    {mediaStore.list && mediaStore.list.map((media: IMedia, index: number) => {
+                                        let url = media.path;
+                                        switch (media.mediaType) {
+                                            case MEDIA_TYPE_FOLDER:
+                                                url = '/img/folder.png';
+                                                break;
+                                            case MEDIA_TYPE_PDF:
+                                                url = '/img/pdf.png';
+                                                break;
+                                            case MEDIA_TYPE_VIDEO:
+                                                url = '/img/video.png';
+                                                break;
+                                            case MEDIA_TYPE_EXCEL:
+                                                url = '/img/excel.png';
+                                                break;
+                                            case MEDIA_TYPE_DOCX:
+                                                url = '/img/doc.png';
+                                                break;
+                                            case MEDIA_TYPE_ZIP:
+                                                url = '/img/zip.png';
+                                                break;
+                                            case MEDIA_TYPE_GIF:
+                                                url = '/img/gif.png';
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        return <Col sm={3}>
+                                            <div onClick={async () => {
+                                                if (media.mediaType == MEDIA_TYPE_FOLDER) {
+                                                    await onGetList({
+                                                        //  type: media.mediaType,
+                                                        folder: media.name
+                                                    });
+                                                    setPath([...path, media.name])
+                                                } else {
+                                                    onSelectItem(media)
+                                                }
+                                            }}
+                                                 className={`media-item  ${media.mediaType === MEDIA_TYPE_FOLDER && 'isFolder'}`}>
+                                                {mediaSelected.includes(media.id) &&
+                                                <i className={`icon check-item icon-check-square-o`}/>}
+                                                <div className={`img`}>
+                                                    <Tooltip title={media.name}>
+                                                        <Image
+                                                            preview={false}
+                                                            width={70}
+                                                            height={`100%`}
+                                                            src={url ?? `error`}
+                                                            fallback={`/img/unknow.png`}
+                                                        />
+                                                    </Tooltip>
+                                                </div>
+                                                <div className={`action`}>
+                                                    <span className={`name`}>{media.name}</span>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    })}
+                                </Row>
+                            </div>
+                        </Spin>
                     </Tabs.TabPane>
                     <Tabs.TabPane key={`2`} tab={`Upload ảnh`}>
+                        <div className={`upload-area`}>
+                            <Form>
+                                <Form.Item name={`image`}>
+                                    <Upload.Dragger
+                                        name={`file`}
+                                        multiple
+                                        customRequest={async ({file, onSuccess}) => {
+                                            const formData = new FormData();
+                                            formData.append("file", file);
+                                            formData.append("toFolder", path.join("/"));
+                                            await mediaService.upload(formData);
+                                            onSuccess && setTimeout(() => onSuccess("ok"), 1000)
+                                        }}
+                                        onDrop={() => {
 
+                                        }}
+                                    >
+                                        <p className="ant-upload-text">Kéo thả media vào vị trí này</p>
+                                        <p className="ant-upload-hint">
+                                            Dung lượng tối đa upload là 10MB
+                                        </p>
+                                    </Upload.Dragger>
+                                </Form.Item>
+                            </Form>
+                        </div>
                     </Tabs.TabPane>
                 </Tabs>
                 <Modal

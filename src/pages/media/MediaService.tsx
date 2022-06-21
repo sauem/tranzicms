@@ -11,7 +11,7 @@ class MediaService {
     }
 
     public upload(formData: any) {
-        return apiFileRequest(`/v1/media`, formData)
+        return apiFileRequest(`/v1/media/upload`, formData)
     }
 
     public delete(mediaId: string) {
