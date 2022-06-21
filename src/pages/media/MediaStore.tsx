@@ -67,9 +67,9 @@ class MediaStore {
     }
 
     @action
-    async delete(mediaId: string) {
+    async delete(mediaIds: any) {
         this.fetching = true;
-        const response = await mediaService.delete(mediaId);
+        const response = await mediaService.delete(mediaIds);
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
             message.success("Xoá media thành công!");

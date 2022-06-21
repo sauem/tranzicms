@@ -7,7 +7,7 @@ import {
     Form,
     Image,
     Input, message,
-    Modal,
+    Modal, Popconfirm,
     Row,
     Select,
     Space,
@@ -46,9 +46,11 @@ const MediaManager = (props: IMediaProps) => {
     const [path, setPath] = useState<Array<string>>([]);
     const [mFolder, setMFolder] = useState(false);
     const onGetList = async (params?: any) => {
+        const searchValues = formSearch.getFieldsValue();
         await mediaStore.getList({
             folder: null,
-            ...params
+            ...params,
+            ...searchValues
         });
     }
     const onClose = () => {
@@ -96,9 +98,14 @@ const MediaManager = (props: IMediaProps) => {
                             <div className={`action`}>
                                 <Space>
                                     <Button onClick={() => setMFolder(true)}>Tạo thư mục</Button>
-                                    <Button disabled={mediaSelected.length == 0}>
-                                        Xóa chọn
-                                    </Button>
+                                    <Popconfirm onConfirm={async () => {
+                                        await mediaStore.delete(mediaSelected)
+                                    }} title={`Xóa file đã chọn?`}>
+                                        <Button disabled={mediaSelected.length == 0}>
+                                            Xóa chọn
+                                        </Button>
+                                    </Popconfirm>
+
                                     {multiple && mediaSelected.length > 0 &&
                                     <Button onClick={() => {
                                         if (callback) {
@@ -109,18 +116,18 @@ const MediaManager = (props: IMediaProps) => {
                                     </Button>}
                                 </Space>
                             </div>
-                            <Form layout={`inline`} form={formSearch}>
+                            <Form onFinish={onGetList} layout={`inline`} form={formSearch}>
                                 <Form.Item name={`key`}>
                                     <Input placeholder={`Tên media`}/>
                                 </Form.Item>
                                 <Form.Item
-                                    initialValue={``}
+                                    initialValue={null}
                                     name={`type`}>
                                     <Select
                                         style={{width: 150}}
                                         allowClear
                                         options={[
-                                            {label: 'Tất cả', value: ''},
+                                            {label: 'Tất cả', value: null},
                                             {label: 'Ảnh', value: 'IMAGE'},
                                             {label: 'Video', value: 'VIDEO'},
                                             {label: 'Nén zip', value: 'ZIP'},
@@ -128,6 +135,7 @@ const MediaManager = (props: IMediaProps) => {
                                             {label: 'Excel file', value: 'XLSX'},
                                             {label: 'Ảnh động', value: 'GIFT'},
                                             {label: 'Tài liệu', value: 'DOCX'},
+                                            {label: 'Không xác định', value: 'UNKNOW'},
                                         ]}/>
                                 </Form.Item>
                                 <Button htmlType={`submit`}>Lọc</Button>

@@ -14,8 +14,8 @@ class MediaService {
         return apiFileRequest(`/v1/media/upload`, formData)
     }
 
-    public delete(mediaId: string) {
-        return deleteRequest(`/v1/media/${mediaId}`)
+    public delete(mediaIds: any) {
+        return deleteRequest(`/v1/media`, mediaIds)
     }
 
     public createFolder(data: any) {
