@@ -31,10 +31,10 @@ const Product = () => {
                 {name: 'Tranzi', link: '/'},
                 {name: 'Sản phẩm', link: '/product'},
             ]}/>
-            <div className={`mb-3 text-right`}>
+            <Space className={`mb-3 text-right`}>
                 <Button onClick={() => setVisibleImport(true)}>Import</Button>
-                <Button>Thêm sản phẩm</Button>
-            </div>
+                <Button type={`default`} href={`/product/create`}>Thêm sản phẩm</Button>
+            </Space>
 
             <Spin spinning={productStore.fetching}>
                 <Table

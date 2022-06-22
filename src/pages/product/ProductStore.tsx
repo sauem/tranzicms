@@ -6,11 +6,62 @@ import HttpStatusCode from "../../common/constants/HttpErrorCode";
 import {message} from "antd";
 import Helper from "../../common/Helper";
 
-export interface IProduct {
+export interface IAttribute {
+    _id: string,
+    sort: number,
+    vi: string,
+    en: string,
+    value: string,
+}
+
+export interface IListPrice {
+    minQty: number,
+    price: number,
+    salePrice: number
+}
+
+export interface IDocument {
     name: string,
+    items: Array<{ title: string, link: string }> | []
+
+}
+
+export interface IExportType {
+    name: string,
+    description: string,
+    order: number | 0
+}
+
+export interface IProduct {
+    id?: string | undefined,
+    name: string,
+    slug: string,
     sku: string,
     orginSku: string,
-    avatar: any
+    avatar: any,
+    description: string,
+    dataSheet: string,
+    content: string,
+    metaTitle: string,
+    metaDescription: string,
+    metaKeyword: string,
+    price: number,
+    categoryId: string,
+    state: string,
+    isHot: boolean,
+    isNew: boolean,
+    isPopular: boolean,
+    imageId: string,
+    thumbs: Array<string> | [],
+    regularPrice: number,
+    attribute: Array<IAttribute> | [],
+    document: Array<IDocument> | [],
+    typeExport: Array<IExportType> | [],
+    listPrice: Array<IListPrice> | [],
+    sameProducts: Array<string> | [],
+    referProduct: Array<string> | [],
+
+
 }
 
 class ProductStore {
@@ -68,7 +119,7 @@ class ProductStore {
     }
 
     @action
-    async update(productId: string, product: IProduct) {
+    async update(productId: any, product: IProduct) {
         this.acLoad = true;
         const response = await productService.update(productId, product);
         this.acLoad = false;
@@ -94,7 +145,7 @@ class ProductStore {
     }
 
     @action
-    async import(data:any){
+    async import(data: any) {
         this.acLoad = true;
         const response = await productService.import(data);
         this.acLoad = false;

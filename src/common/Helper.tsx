@@ -83,6 +83,13 @@ class Helper {
         return `${result.os.name}/${result.os.version} - ${result.browser.name}`
     }
 
+    static replaceNum(number: any) {
+        return ` ${number}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
+
+    static parser(value: any) {
+        return value!.replace(/\ \s?|(,*)/g, '')
+    }
 }
 
 export default Helper;
