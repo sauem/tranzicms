@@ -2,7 +2,7 @@ import {observer} from "mobx-react";
 import {Checkbox, Form, Input, InputNumber, Select} from "antd";
 import {toSlug} from "../../common/helpers/Utils";
 import ProductArchiveSelect from "../../common/ProductArchiveSelect";
-import {STATUS, STATUS_ACTIVE} from "../../common/Contants";
+import {ARCHIVE_LAYOUT, ARCHIVE_LAYOUT_DEFAULT, STATUS, STATUS_ACTIVE} from "../../common/Contants";
 
 const ArchiveForm = (props: { onFinish: any, form: any, type: string }) => {
     return (
@@ -51,6 +51,17 @@ const ArchiveForm = (props: { onFinish: any, form: any, type: string }) => {
                     label={`Trạng thái`} name={`state`}>
                     <Select allowClear>
                         {STATUS.map(stt => <Select.Option
+                            key={stt.value}
+                            value={stt.value}>
+                            {stt.title}</Select.Option>)}
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    rules={[{required: true}]}
+                    initialValue={ARCHIVE_LAYOUT_DEFAULT}
+                    label={`Giao diện`} name={`layout`}>
+                    <Select allowClear>
+                        {ARCHIVE_LAYOUT.map(stt => <Select.Option
                             key={stt.value}
                             value={stt.value}>
                             {stt.title}</Select.Option>)}

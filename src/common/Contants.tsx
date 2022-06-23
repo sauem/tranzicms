@@ -56,6 +56,17 @@ export const ARTICLE_TYPE = [
     {title: 'Video', value: ARTICLE_TYPE_VIDEO},
 ]
 
+export const ARCHIVE_LAYOUT_DEFAULT = "DEFAULT";
+export const ARCHIVE_LAYOUT_VIDEO = "VIDEO";
+export const ARCHIVE_LAYOUT_BLOG = "BLOG";
+export const ARCHIVE_LAYOUT_ARTICLE = "ARTICLE";
+export const ARCHIVE_LAYOUT = [
+    {title: 'Mặc định', value: ARCHIVE_LAYOUT_DEFAULT},
+    {title: 'Video', value: ARCHIVE_LAYOUT_VIDEO},
+    {title: 'Bài viết', value: ARCHIVE_LAYOUT_BLOG},
+    {title: 'Tin tức', value: ARCHIVE_LAYOUT_ARTICLE},
+]
+
 export const MEDIA_TYPE_IMAGE = "IMAGE";
 export const MEDIA_TYPE_VIDEO = "VIDEO";
 export const MEDIA_TYPE_PDF = "PDF";

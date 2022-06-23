@@ -36,6 +36,7 @@
 
 }
 
+
 @keyframes fadeIn {
   0% {
     transform: translateY(-25%);
@@ -139,5 +140,13 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
+  }
+}
+
+.sort-area {
+  list-style: none;
+
+  .sort-item {
+    border-radius: 0;
   }
 }

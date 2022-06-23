@@ -5,7 +5,19 @@ import MediaManager from "./MediaManager";
 import type {UploadFile} from 'antd/es/upload/interface';
 import {useParams} from "react-router-dom";
 
-const MediaButton = (props: { name: string, mask?: boolean, init?: boolean, field: string, form: any, label?: string, callback?: any, multiple?: boolean }) => {
+interface IMediaButton {
+    hideView?: boolean,
+    name: string,
+    mask?: boolean,
+    init?: boolean,
+    field?: string,
+    form: any,
+    label?: string,
+    callback?: any,
+    multiple?: boolean
+}
+
+const MediaButton = (props: IMediaButton) => {
     const [visible, setVisible] = useState(false);
     const [medias, setMedias] = useState<Array<UploadFile>>([]);
     const onClose = () => {
@@ -71,7 +83,7 @@ const MediaButton = (props: { name: string, mask?: boolean, init?: boolean, fiel
                 name={props.field}>
                 <Input/>
             </Form.Item>}
-            <Upload
+            {!props.hideView &&  <Upload
                 onRemove={(file) => {
                     const exclude = medias.filter(m => m.uid != file.uid);
                     setMedias(exclude);
@@ -80,7 +92,8 @@ const MediaButton = (props: { name: string, mask?: boolean, init?: boolean, fiel
                 listType="picture"
                 fileList={medias}
                 defaultFileList={medias}
-            />
+            />}
+
             <Modal
                 width={1200}
                 footer={<Space>

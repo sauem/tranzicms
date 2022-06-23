@@ -76,7 +76,17 @@ const adminRouters = [
         name: 'Cài đặt',
         path: '/setting',
         extract: true,
-        icon: 'icon-components'
+        icon: 'icon-components',
+        subs: [
+            {
+                name: 'Website',
+                path: '/setting'
+            },
+            {
+                name: 'Menu',
+                path: '/menu',
+            }
+        ]
     },
 ]
 export default adminRouters;

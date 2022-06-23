@@ -3,6 +3,7 @@ import {Button, Card, Col, Form, Input, Row, Spin} from "antd";
 import {settingStore} from "./SettingStore";
 import MediaButton from "../media/MediaButton";
 import React, {useEffect, useState} from "react";
+import BreadPath from "../../common/BreadPath";
 
 const Setting = () => {
     const [form] = Form.useForm();
@@ -40,6 +41,10 @@ const Setting = () => {
     }, [])
     return (
         <Spin spinning={settingStore.fetching}>
+            <BreadPath items={[
+                {name: 'Tranzi', link: '/'},
+                {name: 'Thiết lập thông tin'},
+            ]}/>
             <Form form={form} onFinish={onFinish} layout={`vertical`}>
                 <Row gutter={[8, 8]}>
                     <Col sm={16}>

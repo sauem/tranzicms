@@ -32,7 +32,7 @@ const FormProduct = () => {
                 {name: 'Danh sách sản phẩm', link: '/product'},
                 {name: 'Thêm/sửa sản phẩm'}
             ]}/>
-            <Form layout={`vertical`} form={form}>
+            <Form onFinish={onFinish} layout={`vertical`} form={form}>
                 <Row gutter={[8, 8]}>
 
                     <Col sm={16}>
@@ -63,7 +63,7 @@ const FormProduct = () => {
                         </Card>
                     </Col>
                     <Col sm={8}>
-                        <Card extra={<Button htmlType={`submit`} type={`primary`}>Lưu</Button>} title={`Thiết lập`}>
+                        <Card extra={<Button loading={productStore.acLoad} htmlType={`submit`} type={`primary`}>Lưu</Button>} title={`Thiết lập`}>
                             <Form.Item name={`categoryId`} rules={[{required: true}]}
                                        label={`Danh mục`}>
                                 <ArchiveSelect
