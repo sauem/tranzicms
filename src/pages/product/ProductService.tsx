@@ -10,6 +10,10 @@ class ProductService {
         return getRequest("/v1/product", params)
     }
 
+    public getDetail(productId: any) {
+        return getRequest(`/v1/product/${productId}`)
+    }
+
     public create(data: IProduct) {
         return postRequest("/v1/product", data);
     }
@@ -21,6 +25,7 @@ class ProductService {
     public delete(productId: string) {
         return deleteRequest(`/v1/product/${productId}`);
     }
+
     public import(data: any) {
         return apiFileRequest(`/v1/upload`, data);
     }

@@ -24,7 +24,7 @@ export interface IPaginate {
 }
 
 export const BANNER_TYPE_VIDEO = 'VIDEO';
-export const BANNER_TYPE_IMAGE = 'VIDEO';
+export const BANNER_TYPE_IMAGE = 'IMAGE';
 export const BANNER_DEVICE_DESKTOP = 'DESKTOP';
 export const BANNER_DEVICE_MOBILE = 'MOBILE';
 export const BANNER_HOME_SLIDER = 'HOME_SLIDER';

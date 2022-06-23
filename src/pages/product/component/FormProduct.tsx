@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import BreadPath from "../../../common/BreadPath";
 import {Button, Card, Checkbox, Col, Form, Input, InputNumber, Row, Select, Space, Tabs} from "antd";
@@ -14,17 +14,25 @@ import {IProduct, productStore} from "../ProductStore";
 import TabDocument from "./_TabDocument";
 import TabReferProduct from "./_TabReferProduct";
 import TabSameProduct from "./_TabSameProduct";
+import {useParams} from "react-router-dom";
 
 const FormProduct = () => {
+    const params: any = useParams();
     const [form] = Form.useForm();
     const [isUpdate, setUpdate] = useState(false);
     const onFinish = async (data: IProduct) => {
-        if(isUpdate){
+        if (isUpdate) {
             await productStore.update(data.id, data);
-        }else{
+        } else {
             await productStore.create(data);
         }
     }
+    useEffect(() => {
+        (async () => {
+            await productStore.getDetail(params.id);
+            form.setFieldsValue(productStore.product);
+        })()
+    }, [params])
     return (
         <>
             <BreadPath items={[
@@ -63,7 +71,8 @@ const FormProduct = () => {
                         </Card>
                     </Col>
                     <Col sm={8}>
-                        <Card extra={<Button loading={productStore.acLoad} htmlType={`submit`} type={`primary`}>Lưu</Button>} title={`Thiết lập`}>
+                        <Card extra={<Button loading={productStore.acLoad} htmlType={`submit`}
+                                             type={`primary`}>Lưu</Button>} title={`Thiết lập`}>
                             <Form.Item name={`categoryId`} rules={[{required: true}]}
                                        label={`Danh mục`}>
                                 <ArchiveSelect

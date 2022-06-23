@@ -71,6 +71,7 @@ class ProductStore {
     @observable archivePage: IPaginate | undefined;
     @observable fetching: boolean = false;
     @observable acLoad: boolean = false;
+    @observable product: IProduct | undefined;
 
     constructor() {
         makeObservable(this);
@@ -100,6 +101,18 @@ class ProductStore {
         if (response.status == HttpStatusCode.SUCCESS) {
             this.pList = response.body.data;
             this.pPage = Helper.toPage(response.body.metadata);
+        } else {
+            message.error(response.body.message);
+        }
+    }
+
+    @action
+    async getDetail(productId: string) {
+        this.fetching = true;
+        const response = await productService.getDetail(productId);
+        this.fetching = false;
+        if (response.status == HttpStatusCode.SUCCESS) {
+            this.product = response.body;
         } else {
             message.error(response.body.message);
         }
