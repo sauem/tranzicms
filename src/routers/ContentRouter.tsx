@@ -14,6 +14,7 @@ import Inventory from "../pages/inventory/component";
 import ArticleForm from "../pages/article/component/ArticleForm";
 import MediaManager from "../pages/media/MediaManager";
 import FormProduct from "../pages/product/component/FormProduct";
+import Setting from "../pages/setting";
 
 const ContentRouter = (props: any) => {
     return (
@@ -34,6 +35,7 @@ const ContentRouter = (props: any) => {
             <Route path={'/article/create'} element={<ArticleForm/>}/>
             <Route path={'/article/:id'} element={<ArticleForm/>}/>
             <Route path={'/media'} element={<MediaManager/>}/>
+            <Route path={'/setting'} element={<Setting/>}/>
             <Route
                 path="*"
                 element={

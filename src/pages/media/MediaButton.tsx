@@ -5,7 +5,7 @@ import MediaManager from "./MediaManager";
 import type {UploadFile} from 'antd/es/upload/interface';
 import {useParams} from "react-router-dom";
 
-const MediaButton = (props: { name: string, init?: boolean, field: string, form: any, label?: string, callback?: any, multiple?: boolean }) => {
+const MediaButton = (props: { name: string, mask?: boolean, init?: boolean, field: string, form: any, label?: string, callback?: any, multiple?: boolean }) => {
     const [visible, setVisible] = useState(false);
     const [medias, setMedias] = useState<Array<UploadFile>>([]);
     const onClose = () => {
@@ -66,6 +66,11 @@ const MediaButton = (props: { name: string, init?: boolean, field: string, form:
                 name={props.name}>
                 <Input/>
             </Form.Item>
+            {props.mask && <Form.Item
+                hidden
+                name={props.field}>
+                <Input/>
+            </Form.Item>}
             <Upload
                 onRemove={(file) => {
                     const exclude = medias.filter(m => m.uid != file.uid);
