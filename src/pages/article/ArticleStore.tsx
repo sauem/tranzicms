@@ -100,6 +100,11 @@ class ArticleStore {
             message.error(response.body.message);
         }
     }
+
+    @action
+    async reset() {
+        this.detail = undefined;
+    }
 }
 
 export const articleStore = new ArticleStore();

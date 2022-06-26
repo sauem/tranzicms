@@ -17,7 +17,8 @@ import TabSameProduct from "./_TabSameProduct";
 import {useParams} from "react-router-dom";
 
 const FormProduct = () => {
-    const params: any = useParams();
+    const router: any = useParams();
+
     const [form] = Form.useForm();
     const [isUpdate, setUpdate] = useState(false);
     const onFinish = async (data: IProduct) => {
@@ -28,11 +29,19 @@ const FormProduct = () => {
         }
     }
     useEffect(() => {
+        if (productStore.product != undefined) {
+            form.setFieldsValue({
+                ...productStore.product,
+                categoryId: productStore.product?.category?.id
+            });
+            setUpdate(true)
+        }
+    }, [productStore.product])
+    useEffect(() => {
         (async () => {
-            await productStore.getDetail(params.id);
-            form.setFieldsValue(productStore.product);
+            await productStore.getDetail(router.id);
         })()
-    }, [params])
+    }, [])
     return (
         <>
             <BreadPath items={[
@@ -138,7 +147,7 @@ const FormProduct = () => {
                                 label={`Ảnh đại diện`}>
                                 <MediaButton
                                     init={isUpdate}
-                                    field={`image`}
+                                    field={`avatar`}
                                     name={`imageId`}
                                     form={form}
                                 />

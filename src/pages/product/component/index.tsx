@@ -78,7 +78,7 @@ const Product = () => {
                                 return <Space>
                                     <Button size="small">$
                                         Price</Button>
-                                    <a className="ant-btn ant-btn-sm" href={`/product/update?id=${id}`}
+                                    <a className="ant-btn ant-btn-sm" href={`/product/${id}`}
                                        type={`deafault`}><i
                                         className="icon icon-edit mr-1"/> Sửa</a>
                                     <Popconfirm title="Xoá sản phẩm này?" onConfirm={() => productStore.delete(id)}>

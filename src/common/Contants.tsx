@@ -58,13 +58,15 @@ export const ARTICLE_TYPE = [
 
 export const ARCHIVE_LAYOUT_DEFAULT = "DEFAULT";
 export const ARCHIVE_LAYOUT_VIDEO = "VIDEO";
-export const ARCHIVE_LAYOUT_BLOG = "BLOG";
+export const ARCHIVE_LAYOUT_ARROW = "ARROW";
 export const ARCHIVE_LAYOUT_ARTICLE = "ARTICLE";
+export const ARCHIVE_LAYOUT_BLOG = "BLOG";
 export const ARCHIVE_LAYOUT = [
     {title: 'Mặc định', value: ARCHIVE_LAYOUT_DEFAULT},
     {title: 'Video', value: ARCHIVE_LAYOUT_VIDEO},
-    {title: 'Bài viết', value: ARCHIVE_LAYOUT_BLOG},
-    {title: 'Tin tức', value: ARCHIVE_LAYOUT_ARTICLE},
+    {title: 'Bài viết ( layout arrow )', value: ARCHIVE_LAYOUT_ARROW},
+    {title: 'Tin tức ( layout tinh tế )', value: ARCHIVE_LAYOUT_ARTICLE},
+    {title: 'Thông tin ( layout dạng cột )', value: ARCHIVE_LAYOUT_BLOG},
 ]
 
 export const MEDIA_TYPE_IMAGE = "IMAGE";

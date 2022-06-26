@@ -22,9 +22,7 @@ const Article = () => {
 
             <Spin spinning={articleStore.fetching}>
                 <div className={`text-right mb-3`}>
-                    <Link to={`/article/create`}>
-                        <Button>Thêm bài viết</Button>
-                    </Link>
+                    <Button href={`/article/create`} onClick={() => articleStore.reset()}>Thêm bài viết</Button>
                 </div>
                 <Table
                     dataSource={articleStore.list}
@@ -45,10 +43,10 @@ const Article = () => {
                                 return (
                                     <Space>
                                         <Link to={`/article/${id}`}>
-                                            <Button>Sửa</Button>
+                                            <Button size={`small`}>Sửa</Button>
                                         </Link>
                                         <Popconfirm onConfirm={() => articleStore.delete(id)} title={`Xóa bài viết?`}>
-                                            <Button>Xóa</Button>
+                                            <Button size={`small`}>Xóa</Button>
                                         </Popconfirm>
                                     </Space>
                                 )

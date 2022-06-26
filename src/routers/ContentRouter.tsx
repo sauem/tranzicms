@@ -26,8 +26,8 @@ const ContentRouter = (props: any) => {
             <Route path={'/warehouse'} element={<Warehouse/>}/>
             <Route path={'/inventory'} element={<Inventory/>}/>
             <Route path={'/product'} element={<Product/>}/>
-            <Route path={'/product/create'} element={<FormProduct/>}/>
-            <Route path={'/product/:id'} element={<FormProduct/>}/>
+                <Route path={'/product/:id'} element={<FormProduct/>}/>
+                <Route path={'/product/create'} element={<FormProduct/>}/>
             <Route path={'/product/manufacturer'} element={<Manufacturer/>}/>
             <Route path={'/product/archive'} element={<ProductArchive/>}/>
             <Route path={'/order'} element={<Order/>}/>

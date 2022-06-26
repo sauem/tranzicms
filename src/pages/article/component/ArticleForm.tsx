@@ -28,12 +28,12 @@ const ArticleForm = () => {
             form.setFieldsValue({
                 ...articleStore.detail,
                 categoryId: articleStore.detail?.category?.id
-            })
+            });
+            setUpdate(true);
         }
     }, [articleStore.detail])
     useEffect(() => {
         if (router.id) {
-            setUpdate(true);
             (async () => articleStore.getDetail(router.id))();
         }
     }, [])

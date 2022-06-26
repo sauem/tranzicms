@@ -5,19 +5,20 @@ import React, {useEffect, useState} from "react";
 const SwingEditor = (props: { form: any, fieldName: string, callback?: React.FC }) => {
     const [data, setData] = useState<string>('');
     useEffect(() => {
-        setData(props.form.getFieldValue(props.fieldName));
+        if (props.form != undefined) {
+            setData(props.form.getFieldValue(props.fieldName));
+        }
     }, [props])
     return (
         <CKEditor
             editor={ClassicEditor}
-            data={data}
+            data={data ?? ''}
             onChange={(event: any, editor: any) => {
-                const data = editor.getData();
+                const data = editor?.getData();
                 props.form.setFieldsValue({[props.fieldName]: data})
                 // props.callback(data)
             }}
             onReady={(editor: any) => {
-                console.log("Editor", editor)
                 editor.editing.view.change((writer: any) => {
                     writer.setStyle(
                         "height",

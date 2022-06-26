@@ -19,27 +19,29 @@ const TabAttribute = () => {
                             return (
                                 <>
                                     <Col sm={2}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item
+
+                                            name={[field.name, 'order']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
                                     <Col sm={5}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'key']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
                                     <Col sm={6}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'vi']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
                                     <Col sm={6}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'en']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
                                     <Col sm={4}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'value']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>

@@ -5,6 +5,7 @@ import {productService} from "./ProductService";
 import HttpStatusCode from "../../common/constants/HttpErrorCode";
 import {message} from "antd";
 import Helper from "../../common/Helper";
+import {ICategory} from "../archive/ArchiveStore";
 
 export interface IAttribute {
     _id: string,
@@ -54,6 +55,7 @@ export interface IProduct {
     imageId: string,
     thumbs: Array<string> | [],
     regularPrice: number,
+    category: ICategory | undefined,
     attribute: Array<IAttribute> | [],
     document: Array<IDocument> | [],
     typeExport: Array<IExportType> | [],

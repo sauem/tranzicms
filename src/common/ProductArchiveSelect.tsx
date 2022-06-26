@@ -12,7 +12,9 @@ const ProductArchiveSelect = (props: { name: string }) => {
         (async () => onGetList())();
     }, [])
     return (
-        <Form.Item name={props.name} noStyle>
+        <Form.Item
+            name={props.name}
+            noStyle>
             <Select
                 showSearch
                 allowClear
