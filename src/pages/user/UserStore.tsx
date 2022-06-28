@@ -8,6 +8,12 @@ import {inject} from "mobx-react";
 import StorageService from "../../common/helpers/StorageService";
 import {navigatorUtils} from "../../common/helpers/NavigatorUtils";
 
+export interface IProfile {
+    "userName": string,
+    "fullName": string,
+    "role": string,
+}
+
 export interface IUser {
     "fullName": string,
     "username": string,

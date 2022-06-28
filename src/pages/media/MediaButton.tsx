@@ -4,6 +4,7 @@ import {useEffect, useMemo, useState} from "react";
 import MediaManager from "./MediaManager";
 import type {UploadFile} from 'antd/es/upload/interface';
 import {useParams} from "react-router-dom";
+import {IMedia} from "./MediaStore";
 
 interface IMediaButton {
     hideView?: boolean,
@@ -14,7 +15,8 @@ interface IMediaButton {
     form: any,
     label?: string,
     callback?: any,
-    multiple?: boolean
+    multiple?: boolean,
+    returnField?: 'object' | 'url' | 'uid' | 'thumbUrl'
 }
 
 const MediaButton = (props: IMediaButton) => {
@@ -23,17 +25,18 @@ const MediaButton = (props: IMediaButton) => {
     const onClose = () => {
         setVisible(false);
     }
-    const onMediaChose = (media: any) => {
+    const onMediaChose = async (media: any) => {
+        let fileList;
         if (!props.multiple) {
-            setMedias([{
+            fileList = [{
                 uid: media.id,
                 name: media.name,
                 status: 'done',
                 url: media.path,
                 thumbUrl: media.path
-            }])
+            }];
         } else {
-            const fileList = media.map((media: any) => {
+            fileList = media.map((media: any) => {
                 return {
                     uid: media.id,
                     name: media.name,
@@ -42,14 +45,24 @@ const MediaButton = (props: IMediaButton) => {
                     thumbUrl: media.path
                 }
             });
-            setMedias(fileList);
         }
+        await setMedias(fileList);
+        props.callback && props.callback(fileList);
         onClose();
     }
     useEffect(() => {
         let valueForm = undefined;
         if (medias.length > 0) {
-            valueForm = props.multiple ? medias.map(m => m.uid) : medias[0].uid
+            if (props.returnField) {
+                const singleMedia: any = medias[0];
+                if (props.returnField == 'object') {
+                    valueForm = props.multiple ? medias : singleMedia
+                } else {
+                    valueForm = props.multiple ? medias.map((m: any) => m[props.returnField ?? 'uid']) : singleMedia[props.returnField ?? 'uid']
+                }
+            } else {
+                valueForm = props.multiple ? medias.map(m => m.uid) : medias[0].uid
+            }
         }
         props.form.setFieldsValue({
             [props.name]: valueForm
@@ -83,7 +96,7 @@ const MediaButton = (props: IMediaButton) => {
                 name={props.field}>
                 <Input/>
             </Form.Item>}
-            {!props.hideView &&  <Upload
+            {!props.hideView && <Upload
                 onRemove={(file) => {
                     const exclude = medias.filter(m => m.uid != file.uid);
                     setMedias(exclude);

@@ -8,7 +8,7 @@ import Sidebar from "./components/Sidebar";
 import ContentRouter from "./routers/ContentRouter";
 import StorageService from "./common/helpers/StorageService";
 import PublicRouter from "./routers/PublicRouter";
-import {userStore} from "./pages/user/UserStore";
+import {IProfile, IUser, userStore} from "./pages/user/UserStore";
 import {navigatorUtils} from "./common/helpers/NavigatorUtils";
 import {authStore} from "./pages/auth/AuthStore";
 import {common} from "./common/CommonStore";
@@ -16,6 +16,7 @@ import {common} from "./common/CommonStore";
 function App() {
     const [collapsed, setCollapsed] = useState(false);
     const {Header, Content, Footer, Sider} = Layout;
+    const [user, setUser] = useState<IProfile | undefined>(undefined);
     const onCollapse = (collapsed: boolean) => {
         setCollapsed(collapsed);
     };
@@ -23,7 +24,8 @@ function App() {
         document.title = common.title;
         (async () => {
                 if (StorageService.isTokenExits()) {
-                   await userStore.getProfile();
+                    await userStore.getProfile();
+                    await setUser(userStore.profile)
                 } else {
                     if (navigatorUtils.getPathName() !== "/") {
                         navigatorUtils.redirect("/")
@@ -73,7 +75,7 @@ function App() {
                                 width: 'calc(100% - 200px)'
                             }}>
                         <div className={`actions`}>
-                            <span className={`mr-3`}>Xin chào {userStore.profile?.userName}</span>
+                            <span className={`mr-3`}>Xin chào <strong>{user?.userName}</strong></span>
                             <a onClick={() => {
                                 Modal.confirm({
                                     okText: 'Đồng ý',
