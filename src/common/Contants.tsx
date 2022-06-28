@@ -32,6 +32,9 @@ export const BANNER_HOME_BANNER = 'HOME_BANNER';
 export const BANNER_PARTNER = 'PARTNER';
 export const BANNER_SIDEBAR_LEFT = 'SIDEBAR_LEFT';
 export const BANNER_SIDEBAR_RIGHT = 'SIDEBAR_RIGHT';
+export const BANNER_HOT = 'PRODUCT_HOT';
+export const BANNER_NEW = 'PRODUCT_NEW';
+export const BANNER_POPULAR = 'PRODUCT_POPULAR';
 export const BANNER_TYPES = [
     {title: 'Video', value: BANNER_TYPE_VIDEO},
     {title: 'Image', value: BANNER_TYPE_IMAGE},
@@ -39,6 +42,9 @@ export const BANNER_TYPES = [
 export const BANNER_POSITION = [
     {title: 'Slider trang chủ', value: BANNER_HOME_SLIDER},
     {title: 'Banner trang chủ', value: BANNER_HOME_BANNER},
+    {title: 'Banner sản phẩm Mới', value: BANNER_NEW},
+    {title: 'Banner sản phẩm Hot', value: BANNER_HOT},
+    {title: 'Banner sản phẩm Phổ biến', value: BANNER_POPULAR},
     {title: 'Logo nhà sản xuất', value: BANNER_PARTNER},
     {title: 'Sidebar trái', value: BANNER_SIDEBAR_LEFT},
     {title: 'Sidebar phải', value: BANNER_SIDEBAR_RIGHT}

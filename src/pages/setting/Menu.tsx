@@ -26,16 +26,29 @@ const MenuSetting = () => {
     const [formItem] = Form.useForm();
     const [formArchiveArticle] = Form.useForm();
     const [formArchiveProduct] = Form.useForm();
+    const [formCustom] = Form.useForm();
     const [formMenu] = Form.useForm();
     const [menuItems, setMenuItems] = useState<Array<IMenuItem>>([]);
-
+    const onRemove = (item: IMenuItem, list: Array<IMenuItem>) => {
+        const newList: any = list.filter((m, index) => {
+            if (m.children) {
+                m.children = onRemove(item, m.children)
+                // return true;
+            }
+            return m.id != item.id;
+        });
+        return newList;
+    }
     const renderItem = (props: { item: IMenuItem, callback: any }) => {
         const value: IMenuItem = props.item;
         return <Collapse className={`sort-item`}>
             <Collapse.Panel
                 showArrow={false}
                 key={value.id}
-                extra={<Button onClick={() => setMenuItems(menuItems.filter(m => m.id != value.id))}
+                extra={<Button onClick={() => {
+                    const list = onRemove(value, menuItems);
+                    setMenuItems(list)
+                }}
                                size={`small`}><i className={`icon icon-trash`}/></Button>}
                 header={<Space><strong>{value.name}</strong></Space>}>
                 <Form labelCol={{sm: 8}} labelAlign={`left`}>
@@ -47,10 +60,11 @@ const MenuSetting = () => {
                     </Form.Item>
                     <Form.Item className={`mb-2`} label={`Icon`}>
                         <MediaButton
+                            default={value.icon ? [value.icon] : []}
                             callback={(medias: any) => {
                                 if (medias.length > 0) {
                                     const media = medias[0];
-                                    props.callback(value.id, 'slug', media.id)
+                                    props.callback(value.id, 'icon', media)
                                 }
                             }}
                             name={`icon`}
@@ -184,7 +198,7 @@ const MenuSetting = () => {
                                 </Form>
                             </Collapse.Panel>
                             <Collapse.Panel key={`3`} header={`Danh mục sản phẩm`}>
-                                <Form onFinish={addMenuItem} labelCol={{sm: 8}}
+                                <Form form={formArchiveProduct} onFinish={addMenuItem} labelCol={{sm: 8}}
                                       labelAlign={`left`}>
                                     <Form.Item name={`title`} label={`Tiêu đề`}>
                                         <Input/>
@@ -211,7 +225,7 @@ const MenuSetting = () => {
                                 </Form>
                             </Collapse.Panel>
                             <Collapse.Panel key={`4`} header={`Tùy chỉnh`}>
-                                <Form onFinish={addMenuItem} labelCol={{sm: 8}} labelAlign={`left`}>
+                                <Form form={formCustom} onFinish={addMenuItem} labelCol={{sm: 8}} labelAlign={`left`}>
                                     <Form.Item
                                         rules={[{required: true}]}
                                         name={`title`} label={`Tiêu đề`}>
@@ -227,9 +241,9 @@ const MenuSetting = () => {
                                     </Form.Item>
                                     <Form.Item label={`Icon`}>
                                         <MediaButton
-                                            hideView={true}
+                                            returnField={`object`}
                                             name={`icon`}
-                                            form={formItem}
+                                            form={formCustom}
                                         />
                                     </Form.Item>
                                     <div className={`text-right`}>

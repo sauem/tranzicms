@@ -16,6 +16,7 @@ interface IMediaButton {
     label?: string,
     callback?: any,
     multiple?: boolean,
+    default?: Array<UploadFile>,
     returnField?: 'object' | 'url' | 'uid' | 'thumbUrl'
 }
 
@@ -68,10 +69,21 @@ const MediaButton = (props: IMediaButton) => {
             [props.name]: valueForm
         })
     }, [medias])
-
     useEffect(() => {
-        const formMedia = props.form.getFieldValue(props.field);
-        if (formMedia) {
+        if (props.default) {
+            setMedias(props.default)
+            // props.default.map((item: any) => setMedias([...medias, {
+            //     uid: item.uid,
+            //     name: item.name,
+            //     status: 'done',
+            //     url: item.url,
+            //     thumbUrl: item.thumbUrl
+            // }]))
+        }
+    }, [props.default])
+    useEffect(() => {
+        let formMedia = props.form.getFieldValue(props.field);
+        if (formMedia && !props.default) {
             setMedias([{
                 uid: formMedia.id,
                 name: formMedia.name,
