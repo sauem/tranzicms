@@ -2,8 +2,12 @@ import {getRequest, postRequest, putRequest} from "../../common/helpers/RequestH
 import {ISetting} from "./SettingStore";
 
 class SettingService {
-    public getList() {
-        return getRequest("/v1/setting")
+    public getList(params?: any) {
+        return getRequest("/v1/setting", params)
+    }
+
+    public getSetting(key: string) {
+        return getRequest(`/v1/setting/${key}`)
     }
 
     public save(settings: Array<ISetting>) {

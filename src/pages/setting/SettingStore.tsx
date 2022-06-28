@@ -7,8 +7,8 @@ import {IMedia} from "../media/MediaStore";
 
 export interface ISetting {
     key: string,
-    value: string | undefined,
-    thumb: IMedia | undefined
+    value?: string | undefined,
+    thumb?: IMedia | undefined
 }
 
 class SettingStore {
@@ -21,9 +21,9 @@ class SettingStore {
     }
 
     @action
-    async getList() {
+    async getList(params?: any) {
         this.fetching = true;
-        const response = await settingService.getList();
+        const response = await settingService.getList(params);
         this.fetching = false;
         if (response.status === HttpStatusCode.SUCCESS) {
             this.settings = response.body;
