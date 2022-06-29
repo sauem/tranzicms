@@ -92,7 +92,6 @@ const MenuSetting = () => {
     }
 
     const addMenuItem = (menu: any) => {
-        console.log("M", menu)
         let item = {
             name: menu.title,
             slug: menu.value,
@@ -100,14 +99,13 @@ const MenuSetting = () => {
             icon: menu.icon,
             id: uuidv4()
         };
-        switch (menu.type) {
-            case "ARCHIVE_PRODUCT":
-                item = {
-                    ...item,
-                    slug: `/san-pham/${item.slug}`
-                }
-                break;
-        }
+        // switch (item.type) {
+        //     case "ARCHIVE_PRODUCT":
+        //         item = {...item, slug: `/san-pham/${item.slug}`}
+        //         break;
+        //     case "ARCHIVE_ARTICLE":
+        //         break;
+        // }
         setMenuItems([...menuItems, item])
     }
     const onGetMenu = async (key = 'main') => {
@@ -157,11 +155,11 @@ const MenuSetting = () => {
                                         name={`value`} label={`Trang`}>
                                         <Select
                                             options={[
-                                                {label: 'Trang chủ', value: '/'},
-                                                {label: 'Sản phẩm', value: '/san-pham'},
-                                                {label: 'Liên hệ', value: '/contact'},
-                                                {label: 'Giới thiệu', value: '/about'},
-                                                {label: 'BOM', value: '/bom'},
+                                                {label: 'Trang chủ', value: ''},
+                                                {label: 'Sản phẩm', value: 'san-pham'},
+                                                {label: 'Liên hệ', value: 'contact'},
+                                                {label: 'Giới thiệu', value: 'about'},
+                                                {label: 'BOM', value: 'bom'},
                                             ]}
                                         />
                                     </Form.Item>
@@ -178,7 +176,7 @@ const MenuSetting = () => {
                                     </Form.Item>
                                     <Form.Item label={`Danh mục`}>
                                         <ArchiveSelect
-                                            fields={{label: 'name', value: 'slug'}}
+                                            fields={{label: 'name', value: 'slug', children: 'children'}}
                                             type={`ARTICLE`}
                                             name={`value`}/>
                                     </Form.Item>
@@ -205,7 +203,7 @@ const MenuSetting = () => {
                                     </Form.Item>
                                     <Form.Item label={`Danh mục`}>
                                         <ArchiveSelect
-                                            fields={{label: 'name', value: 'slug'}}
+                                            fields={{label: 'name', value: 'slug', children: 'children'}}
                                             type={`PRODUCT`}
                                             name={`value`}/>
                                     </Form.Item>

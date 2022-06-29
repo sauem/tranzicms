@@ -1,13 +1,15 @@
 import {Button, Card, Space, Popconfirm, Image, Table, Modal, Form, Upload, Spin} from "antd";
 import {IProduct, productStore} from "../ProductStore";
 import {observer} from "mobx-react";
-import {useEffect, useState} from "react";
+import {Key, useEffect, useState} from "react";
 import PopupFooter from "../../../common/PopupFooter";
 import ProductArchiveSelect from "../../../common/ProductArchiveSelect";
 import BreadPath from "../../../common/BreadPath";
 import {Link} from "react-router-dom";
+import ArchiveSelect from "../../../components/ArchiveSelect";
 
 const Product = () => {
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [importVisible, setVisibleImport] = useState<boolean>(false);
     const [formImport] = Form.useForm();
     const formData = new FormData();
@@ -35,10 +37,20 @@ const Product = () => {
             <Space className={`mb-3 text-right`}>
                 <Button onClick={() => setVisibleImport(true)}>Import</Button>
                 <Button type={`default`} href={`/product/create`}>Thêm sản phẩm</Button>
+                <Popconfirm onConfirm={() => productStore.deleteMultiple(selectedRowKeys)} title={`Xóa sản phẩm đã chọn?`}>
+                    <Button type={`default`}>Xoá chọn</Button>
+                </Popconfirm>
             </Space>
 
             <Spin spinning={productStore.fetching}>
                 <Table
+                    rowKey={`id`}
+                    rowSelection={{
+                        selectedRowKeys,
+                        onChange: (newSelectedRowKeys: Key[]) => {
+                            setSelectedRowKeys(newSelectedRowKeys);
+                        }
+                    }}
                     dataSource={productStore.pList}
                     pagination={productStore.pPage}
                     onChange={({current, pageSize}: any) => onGetList({page: (current - 1), size: pageSize})}
@@ -103,7 +115,7 @@ const Product = () => {
                     labelCol={{sm: 8}}
                     labelAlign={`left`}>
                     <Form.Item label={`Danh mục`}>
-                        <ProductArchiveSelect name={`categoryId`}/>
+                        <ArchiveSelect type={`PRODUCT`} name={`categoryId`}/>
                     </Form.Item>
                     <Form.Item label={`File sản phẩm`}>
                         <Upload

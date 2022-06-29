@@ -30,6 +30,10 @@ class ProductService {
         return deleteRequest(`/v1/product/${productId}`);
     }
 
+    public deleteMultiple(ids: any) {
+        return deleteRequest(`/v1/product/multiple`, ids);
+    }
+
     public import(data: any) {
         return apiFileRequest(`/v1/upload`, data);
     }

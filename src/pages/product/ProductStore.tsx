@@ -169,6 +169,19 @@ class ProductStore {
     }
 
     @action
+    async deleteMultiple(ids: any) {
+        this.acLoad = true;
+        const response = await productService.deleteMultiple(ids);
+        this.acLoad = false;
+        if (response.status == HttpStatusCode.SUCCESS) {
+            message.success("Xóa sản phẩm thành công!");
+            await this.getList();
+        } else {
+            message.error(response.body.message);
+        }
+    }
+
+    @action
     async import(data: any) {
         this.acLoad = true;
         const response = await productService.import(data);
