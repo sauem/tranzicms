@@ -25,6 +25,7 @@ const Article = () => {
                     <Button href={`/article/create`} onClick={() => articleStore.reset()}>Thêm bài viết</Button>
                 </div>
                 <Table
+                    rowKey={`id`}
                     dataSource={articleStore.list}
                     pagination={articleStore.page}
                     onChange={({current, pageSize}: any) => onGetList({page: (current - 1), size: pageSize})}

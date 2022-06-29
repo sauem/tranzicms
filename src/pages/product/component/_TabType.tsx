@@ -11,30 +11,31 @@ const TabType = () => {
                 <Col sm={8}>Thuộc tính</Col>
                 <Col sm={8}>Miêu tả</Col>
             </Row>
-            <Form.List name={`list_price`}>
+            <Form.List name={`classifications`}>
                 {(fields, {add, remove}) => (
                     <Row gutter={[4, 0]}>
                         {fields.map(field => {
                             return (
                                 <>
                                     <Col sm={4}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'order']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'name']} className={`mb-2`}>
                                             <Input/>
 
                                         </Form.Item>
                                     </Col>
                                     <Col sm={8}>
-                                        <Form.Item className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'description']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
                                     <Col sm={2}>
                                         <Button
+                                            htmlType={`button`}
                                             className={`p-1 d-flex align-items-center justify-content-center`}
                                             onClick={() => remove(field.name)}
                                             type={`default`}>
@@ -45,9 +46,9 @@ const TabType = () => {
                             )
                         })}
                         <Col sm={24}>
-                           <Space>
-                               <Button onClick={add} type={`primary`}>Thêm</Button>
-                           </Space>
+                            <Space>
+                                <Button htmlType={`button`} onClick={() => add()} type={`primary`}>Thêm</Button>
+                            </Space>
                         </Col>
                     </Row>
 

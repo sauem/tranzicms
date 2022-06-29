@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import PopupFooter from "../../../common/PopupFooter";
 import ProductArchiveSelect from "../../../common/ProductArchiveSelect";
 import BreadPath from "../../../common/BreadPath";
+import {Link} from "react-router-dom";
 
 const Product = () => {
     const [importVisible, setVisibleImport] = useState<boolean>(false);
@@ -55,7 +56,7 @@ const Product = () => {
                                             src={raw.avatar?.path ?? 'error'}
                                         />
                                         <Space className="ml-1" size={1} direction="vertical">
-                                            <a href="">{name}</a>
+                                            <Link to={`/product/${raw.id}`}>{name}</Link>
                                             <small>MNSX: {raw.orginSku}</small>
                                             <small>SKU: {raw.sku}</small>
                                         </Space>
@@ -76,15 +77,10 @@ const Product = () => {
                             key: 'id',
                             render: (id, raw) => {
                                 return <Space>
-                                    <Button size="small">$
-                                        Price</Button>
                                     <a className="ant-btn ant-btn-sm" href={`/product/${id}`}
-                                       type={`deafault`}><i
-                                        className="icon icon-edit mr-1"/> Sửa</a>
+                                       type={`deafault`}>Sửa</a>
                                     <Popconfirm title="Xoá sản phẩm này?" onConfirm={() => productStore.delete(id)}>
-                                        <Button danger
-                                                type={`default`} size="small"><i
-                                            className="icon icon-trash mr-1"/> Xóa</Button>
+                                        <Button type={`default`} size="small">Xóa</Button>
                                     </Popconfirm>
                                 </Space>
                             }

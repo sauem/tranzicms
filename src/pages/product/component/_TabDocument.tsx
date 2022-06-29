@@ -11,13 +11,13 @@ const TabDocument = () => {
             </Row>
             <Divider/>
             <Form.List name={`documents`}>
-                {(fields, {add, remove}) => (
+                {(fields, top) => (
                     <Row gutter={[4, 0]}>
                         {fields.map(field => {
                             return (
                                 <>
                                     <Col sm={6}>
-                                        <Form.Item name={`name`} className={`mb-2`}>
+                                        <Form.Item name={[field.name, 'name']} className={`mb-2`}>
                                             <Input/>
                                         </Form.Item>
                                     </Col>
@@ -33,8 +33,9 @@ const TabDocument = () => {
                                                             </Col>
                                                             <Col sm={14}>
                                                                 <Button
+                                                                    htmlType={`button`}
                                                                     className={`d-flex align-items-center justify-content-center`}
-                                                                    onClick={() => remove(field.name)}
+                                                                    onClick={() => top.remove(field.name)}
                                                                     type={`default`}>
                                                                     <i className={`icon icon-trash`}/>
                                                                 </Button>
@@ -49,7 +50,7 @@ const TabDocument = () => {
                                                                         <Col sm={8}>
                                                                             <Form.Item
                                                                                 className="mb-2"
-                                                                                name={[childField.name, 'title']}>
+                                                                                name={[childField.name, 'name']}>
                                                                                 <Input/>
                                                                             </Form.Item>
                                                                         </Col>
@@ -61,16 +62,14 @@ const TabDocument = () => {
                                                                             </Form.Item>
                                                                         </Col>
                                                                         <Col sm={4}>
-                                                                            <Button
-                                                                                htmlType="button"
-                                                                                onClick={() => remove(childField.name)}>
+                                                                            <Button htmlType="button">
                                                                                 Chọn link
                                                                             </Button>
                                                                         </Col>
                                                                         <Col sm={2}>
                                                                             <Button
                                                                                 htmlType="button"
-                                                                                onClick={() => remove(childField.name)}><i
+                                                                                onClick={() => remove(key)}><i
                                                                                 className="icon icon-trash"/>
                                                                             </Button>
                                                                         </Col>
@@ -87,7 +86,7 @@ const TabDocument = () => {
                             )
                         })}
                         <Col sm={24}>
-                            <Button onClick={add} type={`primary`}>Thêm</Button>
+                            <Button htmlType={`button`} onClick={() => top.add()} type={`primary`}>Thêm</Button>
                         </Col>
                     </Row>
 

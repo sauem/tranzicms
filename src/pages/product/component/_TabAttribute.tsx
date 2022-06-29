@@ -47,6 +47,7 @@ const TabAttribute = () => {
                                     </Col>
                                     <Col sm={1}>
                                         <Button
+                                            htmlType={`button`}
                                             className={`p-1 d-flex align-items-center justify-content-center`}
                                             onClick={() => remove(field.name)}
                                             type={`default`}>
@@ -57,7 +58,7 @@ const TabAttribute = () => {
                             )
                         })}
                         <Col sm={24}>
-                            <Button onClick={add} type={`primary`}>Thêm</Button>
+                            <Button htmlType={`button`} onClick={() => add()} type={`primary`}>Thêm</Button>
                         </Col>
                     </Row>
 

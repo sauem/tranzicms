@@ -10,6 +10,10 @@ class ProductService {
         return getRequest("/v1/product", params)
     }
 
+    public searchKey(key?: any) {
+        return getRequest(`/v1/product/searchKey?key=${key}`)
+    }
+
     public getDetail(productId: any) {
         return getRequest(`/v1/product/${productId}`)
     }

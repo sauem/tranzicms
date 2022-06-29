@@ -1,58 +1,75 @@
-import {Button, Col, Form, Input, InputNumber, Row, Space} from "antd";
-import Helper from "../../../common/Helper";
-import React from "react";
+import {Button, Col, Form, Image, Input, InputNumber, Row, Space} from "antd";
+import React, {useEffect, useState} from "react";
+import ProductSelect from "../../../components/ProductSelect";
 
-const TabSameProduct = () => {
-
+const TabSameProduct = (props: { form?: any }) => {
+    const [products, setProduct] = useState<any>(props.form.getFieldValue('sameProduct') || []);
+    useEffect(() => {
+        props.form.setFieldsValue({
+            sameProduct: products
+        })
+    }, [products])
     return (
         <>
-            <Row>
-                <Col sm={4}>Thứ tự</Col>
-                <Col sm={8}>Thuộc tính</Col>
-                <Col sm={8}>Miêu tả</Col>
+            <Row gutter={[8, 8]}>
+                <Col sm={12}>Chọn sản phẩm</Col>
+                <Col sm={12}>Sản phẩm</Col>
             </Row>
-            <Form.List name={`list_price`}>
-                {(fields, {add, remove}) => (
-                    <Row gutter={[4, 0]}>
-                        {fields.map(field => {
+            <Row gutter={[8, 8]}>
+                <Col sm={12}>
+                    <ProductSelect callback={(value: any, event: any) => {
+                        setProduct([...products, {
+                            id: value,
+                            name: event.item.name,
+                            sku: event.item.sku,
+                            slug: event.item.slug,
+                            image: event.item.avatar.path
+                        }]);
+                    }}/>
+                </Col>
+                <Col sm={12}>
+                    <Form.List name={`sameProduct`}>
+                        {(fields, {add, remove}) => {
+                            const sameProduct = props.form.getFieldValue('sameProduct');
                             return (
-                                <>
-                                    <Col sm={4}>
-                                        <Form.Item className={`mb-2`}>
-                                            <Input/>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col sm={8}>
-                                        <Form.Item className={`mb-2`}>
-                                            <Input/>
-
-                                        </Form.Item>
-                                    </Col>
-                                    <Col sm={8}>
-                                        <Form.Item className={`mb-2`}>
-                                            <Input/>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col sm={2}>
-                                        <Button
-                                            className={`p-1 d-flex align-items-center justify-content-center`}
-                                            onClick={() => remove(field.name)}
-                                            type={`default`}>
-                                            <i className={`icon icon-trash`}/>
-                                        </Button>
-                                    </Col>
-                                </>
+                                <div>
+                                    {fields.map((field, key) => {
+                                        if (sameProduct) {
+                                            return (
+                                                <div className={`mb-2`}>
+                                                    <Form.Item hidden name={[field.name, 'id']}>
+                                                        <Input/>
+                                                    </Form.Item>
+                                                    <Space>
+                                                        <Button
+                                                            onClick={() => {
+                                                                remove(field.name)
+                                                                setProduct(products.filter((item: any, index: number) => index != field.name))
+                                                            }}
+                                                            size={`small`} htmlType={`button`}><i
+                                                            className={`icon icon-trash`}/></Button>
+                                                        <Image
+                                                            src={sameProduct[field.name]?.image}
+                                                            width={60}
+                                                            height={60}
+                                                        />
+                                                        <Space direction={`vertical`}>
+                                                            <span>{sameProduct[field.name]?.name}</span>
+                                                            <span>{sameProduct[field.name]?.sku}</span>
+                                                        </Space>
+                                                    </Space>
+                                                </div>
+                                            )
+                                        } else {
+                                            return <></>
+                                        }
+                                    })}
+                                </div>
                             )
-                        })}
-                        <Col sm={24}>
-                           <Space>
-                               <Button onClick={add} type={`primary`}>Thêm</Button>
-                           </Space>
-                        </Col>
-                    </Row>
-
-                )}
-            </Form.List>
+                        }}
+                    </Form.List>
+                </Col>
+            </Row>
         </>
     )
 }

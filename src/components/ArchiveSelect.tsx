@@ -4,7 +4,7 @@ import {Form, Select} from "antd";
 import {archiveStore} from "../pages/archive/ArchiveStore";
 import {observer} from "mobx-react";
 
-const ArchiveSelect = (props: { type: string, name: string, fields?: any }) => {
+const ArchiveSelect = (props: { type: string, name: string, fields?: any, rules?: any }) => {
     useEffect(() => {
         (async () => archiveStore.getList({
             page: false,
@@ -14,6 +14,7 @@ const ArchiveSelect = (props: { type: string, name: string, fields?: any }) => {
     return (
         <Form.Item
             noStyle
+            rules={props.rules}
             name={props.name}>
             <Select
                 style={{minWidth: 200, width: '100%'}}

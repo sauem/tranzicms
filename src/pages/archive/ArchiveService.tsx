@@ -14,7 +14,7 @@ class ArchiveService {
         return putRequest(`/v1/category/${categoryId}`, category);
     }
 
-    public delete(categoryId: string) {
+    public delete(categoryId: any) {
         return deleteRequest(`/v1/category/${categoryId}`);
     }
 }

@@ -22,6 +22,7 @@ const FormProduct = () => {
     const [form] = Form.useForm();
     const [isUpdate, setUpdate] = useState(false);
     const onFinish = async (data: IProduct) => {
+        console.log("P", data)
         if (isUpdate) {
             await productStore.update(data.id, data);
         } else {
@@ -71,10 +72,10 @@ const FormProduct = () => {
                                     <TabType/>
                                 </Tabs.TabPane>
                                 <Tabs.TabPane key={"6"} tab={`Sản phẩm gợi ý`}>
-                                    <TabReferProduct/>
+                                    <TabReferProduct form={form}/>
                                 </Tabs.TabPane>
                                 <Tabs.TabPane key={"7"} tab={`Sản phẩm tương tự`}>
-                                    <TabSameProduct/>
+                                    <TabSameProduct form={form}/>
                                 </Tabs.TabPane>
                             </Tabs>
                         </Card>

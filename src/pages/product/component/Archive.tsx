@@ -1,7 +1,7 @@
 import BreadPath from "../../../common/BreadPath";
 import {Button, Checkbox, Form, Input, InputNumber, Modal, Popconfirm, Select, Space, Spin, Table} from "antd";
 import {productStore} from "../ProductStore";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {archiveStore} from "../../archive/ArchiveStore";
 import PopupFooter from "../../../common/PopupFooter";
 import Product from "./index";
@@ -10,6 +10,8 @@ import {STATUS, STATUS_ACTIVE} from "../../../common/Contants";
 import {observer} from "mobx-react";
 import {toNumber, toSlug} from "../../../common/helpers/Utils";
 import Helper from "../../../common/Helper";
+import ArchiveSelect from "../../../components/ArchiveSelect";
+import MediaButton from "../../media/MediaButton";
 
 const ProductArchive = () => {
     const [visible, setVisible] = useState<boolean>(false);
@@ -23,15 +25,9 @@ const ProductArchive = () => {
     }
     const onFinish = async (data: any) => {
         if (!isUpdate) {
-            await archiveStore.create(data).finally(() => {
-                onClose();
-                onGetList();
-            })
+            await archiveStore.create(data).finally(onClose)
         } else {
-            await archiveStore.update(data.id, data).finally(() => {
-                onClose();
-                onGetList();
-            })
+            await archiveStore.update(data.id, data).finally(onClose)
         }
     }
     const onClose = () => {
@@ -81,7 +77,7 @@ const ProductArchive = () => {
                                         form.setFieldsValue(raw);
                                         setVisible(true);
                                     }} size={`small`}>Sửa</Button>
-                                    <Popconfirm onConfirm={() => archiveStore.delete(id).finally(onGetList)}
+                                    <Popconfirm onConfirm={() => archiveStore.delete(raw).finally(onGetList)}
                                                 title={`Xoá danh mục?`}>
                                         <Button size={`small`}>Xóa</Button>
                                     </Popconfirm>
@@ -136,7 +132,7 @@ const ProductArchive = () => {
                     <Form.Item
                         rules={[{required: true}]}
                         label={`Danh mục cha`}>
-                        <ProductArchiveSelect name={`parentId`}/>
+                        <ArchiveSelect type={`PRODUCT`} name={`parentId`}/>
                     </Form.Item>
                     <Form.Item
                         rules={[{required: true}]}
@@ -151,7 +147,7 @@ const ProductArchive = () => {
                     </Form.Item>
                     <Form.Item
                         initialValue={50}
-                        name={`sortOrder`} label={`Vị trí`}>
+                        name={`sortOrder`} label={`Vị trí ( Z-A )`}>
                         <InputNumber/>
                     </Form.Item>
                     <Form.Item
@@ -159,6 +155,43 @@ const ProductArchive = () => {
                         valuePropName={`checked`}
                         name={`showHome`} label={`Hiển thị trang chủ`}>
                         <Checkbox>Kích hoạt</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item
+                        label={`Ảnh Icon`}>
+                        <MediaButton
+                            init={isUpdate}
+                            field={`icon`}
+                            name={`iconId`}
+                            form={form}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label={`Ảnh cover`}>
+                        <MediaButton
+                            init={isUpdate}
+                            field={`cover`}
+                            name={`coverId`}
+                            form={form}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label={`Ảnh banner`}>
+                        <MediaButton
+                            init={isUpdate}
+                            field={`banner`}
+                            name={`bannerId`}
+                            form={form}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label={`Ảnh avatar`}>
+                        <MediaButton
+                            init={isUpdate}
+                            field={`image`}
+                            name={`imageId`}
+                            form={form}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

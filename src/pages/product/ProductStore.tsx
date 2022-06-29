@@ -16,7 +16,7 @@ export interface IAttribute {
 }
 
 export interface IListPrice {
-    minQty: number,
+    quantity: number,
     price: number,
     salePrice: number
 }
@@ -31,6 +31,15 @@ export interface IExportType {
     name: string,
     description: string,
     order: number | 0
+}
+
+export interface IProductInclude {
+    name: string,
+    slug: string,
+    sku: string,
+    orginSku: string,
+    image: string,
+    manufacturer: string
 }
 
 export interface IProduct {
@@ -57,11 +66,11 @@ export interface IProduct {
     regularPrice: number,
     category: ICategory | undefined,
     attribute: Array<IAttribute> | [],
-    document: Array<IDocument> | [],
-    typeExport: Array<IExportType> | [],
+    documents: Array<IDocument> | [],
+    classifications: Array<IExportType> | [],
     listPrice: Array<IListPrice> | [],
-    sameProducts: Array<string> | [],
-    referProduct: Array<string> | [],
+    sameProductIds: Array<string> | [],
+    relatedProductIds: Array<string> | [],
 
 
 }

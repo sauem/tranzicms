@@ -3,6 +3,7 @@ import {Checkbox, Form, Input, InputNumber, Select} from "antd";
 import {toSlug} from "../../common/helpers/Utils";
 import ProductArchiveSelect from "../../common/ProductArchiveSelect";
 import {ARCHIVE_LAYOUT, ARCHIVE_LAYOUT_DEFAULT, STATUS, STATUS_ACTIVE} from "../../common/Contants";
+import ArchiveSelect from "../../components/ArchiveSelect";
 
 const ArchiveForm = (props: { onFinish: any, form: any, type: string }) => {
     return (
@@ -41,9 +42,8 @@ const ArchiveForm = (props: { onFinish: any, form: any, type: string }) => {
                     <Input/>
                 </Form.Item>
                 <Form.Item
-                    rules={[{required: true}]}
                     label={`Danh mục cha`}>
-                    <ProductArchiveSelect name={`parentId`}/>
+                    <ArchiveSelect type={props.type} name={`parentId`}/>
                 </Form.Item>
                 <Form.Item
                     rules={[{required: true}]}

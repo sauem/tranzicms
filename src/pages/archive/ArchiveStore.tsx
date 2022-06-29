@@ -6,7 +6,7 @@ import Helper from "../../common/Helper";
 import {IPaginate} from "../../common/Contants";
 
 export interface ICategory {
-    id?:string,
+    id?: string,
     name: string,
     slug: string,
     showHome: boolean,
@@ -15,7 +15,9 @@ export interface ICategory {
     coverId?: string,
     bannerId?: string,
     iconId?: string
-    parentId?: string
+    parentId?: string,
+    layout?: string,
+    type: string
 }
 
 class ArchiveStore {
@@ -42,12 +44,14 @@ class ArchiveStore {
     }
 
     @action
-    async delete(categoryId: string) {
+    async delete(category: ICategory) {
         this.acLoad = true;
-        const response = await archiveService.delete(categoryId);
+        const response = await archiveService.delete(category.id);
         this.acLoad = false;
         if (response.status == HttpStatusCode.SUCCESS) {
             message.success("Xoá danh mục thành công!");
+            await this.getList({type: category.type});
+
         } else {
             message.error(response.body.message);
         }
@@ -60,6 +64,7 @@ class ArchiveStore {
         this.acLoad = false;
         if (response.status == HttpStatusCode.SUCCESS) {
             message.success("Tạo danh mục thành công!");
+            await this.getList({type: category.type});
         } else {
             message.error(response.body.message);
         }
@@ -72,6 +77,7 @@ class ArchiveStore {
         this.acLoad = false;
         if (response.status == HttpStatusCode.SUCCESS) {
             message.success("Cập nhật danh mục thành công!");
+            await this.getList({type: category.type});
         } else {
             message.error(response.body.message);
         }

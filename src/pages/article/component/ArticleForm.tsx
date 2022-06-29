@@ -14,6 +14,7 @@ const ArticleForm = () => {
     const router: any = useParams();
 
     const [isUpdate, setUpdate] = useState(false);
+    const [isVideo, setIsVideo] = useState(false);
     const [form] = Form.useForm();
     const onFinish = async (data: any) => {
         if (isUpdate) {
@@ -102,13 +103,17 @@ const ArticleForm = () => {
                             rules={[{required: true}]}
                             initialValue={ARTICLE_TYPE_DEFAULT}
                             label={`Thể loại`} name={`type`}>
-                            <Select allowClear>
+                            <Select onChange={(value => setIsVideo(value !== ARTICLE_TYPE_DEFAULT))} allowClear>
                                 {ARTICLE_TYPE.map(stt => <Select.Option
                                     key={stt.value}
                                     value={stt.value}>
                                     {stt.title}</Select.Option>)}
                             </Select>
                         </Form.Item>
+                        {isVideo && <Form.Item name={`videoUrl`} label={`Video url`}>
+                            <Input/>
+                        </Form.Item>}
+
                         <Form.Item
                             rules={[{required: true}]}
                             initialValue={STATUS_ACTIVE}

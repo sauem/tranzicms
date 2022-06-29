@@ -20,15 +20,9 @@ const ArticleArchive = () => {
     }
     const onFinish = async (data: any) => {
         if (!isUpdate) {
-            await archiveStore.create(data).finally(() => {
-                onClose();
-                onGetList();
-            })
+            await archiveStore.create(data).finally(onClose)
         } else {
-            await archiveStore.update(data.id, data).finally(() => {
-                onClose();
-                onGetList();
-            })
+            await archiveStore.update(data.id, data).finally(onClose)
         }
     }
     const onClose = () => {
@@ -52,6 +46,7 @@ const ArticleArchive = () => {
                     <Button onClick={() => setVisible(true)}>Tạo danh mục</Button>
                 </div>
                 <Table
+                    rowKey={`id`}
                     dataSource={archiveStore.list}
                     pagination={archiveStore.page}
                     onChange={({current, pageSize}: any) => onGetList({page: (current - 1), size: pageSize})}
@@ -72,7 +67,7 @@ const ArticleArchive = () => {
                                         form.setFieldsValue(raw);
                                         setVisible(true);
                                     }} size={`small`}>Sửa</Button>
-                                    <Popconfirm onConfirm={() => archiveStore.delete(id).finally(onGetList)}
+                                    <Popconfirm onConfirm={() => archiveStore.delete(raw)}
                                                 title={`Xoá danh mục?`}>
                                         <Button size={`small`}>Xóa</Button>
                                     </Popconfirm>
