@@ -157,9 +157,17 @@ const MenuSetting = () => {
                                             options={[
                                                 {label: 'Trang chủ', value: ''},
                                                 {label: 'Sản phẩm', value: 'san-pham'},
-                                                {label: 'Liên hệ', value: 'contact'},
-                                                {label: 'Giới thiệu', value: 'about'},
+                                                {label: 'Liên hệ', value: 'lien-he'},
+                                                {label: 'Giới thiệu', value: 'gioi-thieu'},
                                                 {label: 'BOM', value: 'bom'},
+                                                {label: 'Kiến thức', value: 'kien-thuc'},
+                                                {label: 'Thông tin', value: 'thong-tin'},
+                                                {label: 'Giỏ hàng', value: 'gio-hang'},
+                                                {label: 'Tài khoản', value: 'tai-khoan'},
+                                                {label: 'Thanh toán', value: 'logout'},
+                                                {label: 'Đăng nhập', value: 'signin'},
+                                                {label: 'Đăng ký tài khoản', value: 'signup'},
+                                                {label: 'Nhà sản xuất', value: 'nha-san-xuat'},
                                             ]}
                                         />
                                     </Form.Item>
