@@ -57,17 +57,16 @@ const TabInfo = (props: { form: any }) => {
                         fieldName={`content`}
                         form={props.form}/>
                 </Form.Item>
-
                 <Form.Item
-                    label={`Meta title`} name={`metaTitle`}>
+                    label={`Meta title`} name={`seoTitle`}>
                     <Input/>
                 </Form.Item>
                 <Form.Item
-                    label={`Meta description`} name={`metaDescription`}>
+                    label={`Meta description`} name={`seoDescription`}>
                     <Input/>
                 </Form.Item>
                 <Form.Item
-                    label={`Meta keywords`} name={`metaKeyword`}>
+                    label={`Meta keywords`} name={`seoKeywords`}>
                     <Input/>
                 </Form.Item>
             </Col>

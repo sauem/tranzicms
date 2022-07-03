@@ -22,8 +22,7 @@ const FormProduct = () => {
     const [form] = Form.useForm();
     const [isUpdate, setUpdate] = useState(false);
     const onFinish = async (data: IProduct) => {
-        console.log("P", data)
-        if (isUpdate) {
+        if (isUpdate && data.id != undefined) {
             await productStore.update(data.id, data);
         } else {
             await productStore.create(data);

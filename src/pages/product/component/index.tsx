@@ -36,6 +36,7 @@ const Product = () => {
             ]}/>
             <Space className={`mb-3 text-right`}>
                 <Button onClick={() => setVisibleImport(true)}>Import</Button>
+                <Button onClick={() => setVisibleImport(true)}>Async elastic</Button>
                 <Button type={`default`} href={`/product/create`}>Thêm sản phẩm</Button>
                 <Popconfirm onConfirm={() => productStore.deleteMultiple(selectedRowKeys)} title={`Xóa sản phẩm đã chọn?`}>
                     <Button type={`default`}>Xoá chọn</Button>
