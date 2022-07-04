@@ -158,13 +158,12 @@ export function apiCall(path: string, _method: Method = "POST", _params: object,
     if (StorageService.isTokenExits()) {
         newHeaders['Authorization'] = "Bearer " + StorageService.getToken();
     }
-
     return new Promise<IApiResponse>((resolve) => {
         axios({
             data: JSON.stringify(_params),
             headers: {
                 ...newHeaders,
-                ...headers
+                //...headers
             },
             method: _method,
             url: API_URL + path
