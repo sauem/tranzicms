@@ -51,7 +51,6 @@ const TabInfo = (props: { form: any }) => {
                     <Input.TextArea/>
                 </Form.Item>
                 <Form.Item
-                    rules={[{required: true}]}
                     label={`Nội dung`} name={`content`}>
                     <SwingEditor
                         fieldName={`content`}
