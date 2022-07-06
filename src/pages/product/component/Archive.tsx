@@ -51,6 +51,7 @@ const ProductArchive = () => {
                     <Button onClick={() => setVisible(true)}>Tạo danh mục</Button>
                 </div>
                 <Table
+                    rowKey={'id'}
                     dataSource={archiveStore.list}
                     pagination={archiveStore.page}
                     onChange={({current, pageSize}: any) => onGetList({page: (current - 1), size: pageSize})}
