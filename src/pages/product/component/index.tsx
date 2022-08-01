@@ -3,7 +3,6 @@ import {IProduct, productStore} from "../ProductStore";
 import {observer} from "mobx-react";
 import {Key, useEffect, useState} from "react";
 import PopupFooter from "../../../common/PopupFooter";
-import ProductArchiveSelect from "../../../common/ProductArchiveSelect";
 import BreadPath from "../../../common/BreadPath";
 import {Link} from "react-router-dom";
 import ArchiveSelect from "../../../components/ArchiveSelect";

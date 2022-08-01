@@ -31,7 +31,7 @@ class ProductService {
     }
 
     public deleteMultiple(ids: any) {
-        return deleteRequest(`/v1/product/multiple`, ids);
+        return deleteRequest(`/v1/product/multiple?ids=${ids}`);
     }
 
     public import(data: any) {
