@@ -92,6 +92,7 @@ const MenuSetting = () => {
     }
 
     const addMenuItem = (menu: any) => {
+        console.log("ITEM", menu)
         let item = {
             name: menu.title,
             slug: menu.value,
@@ -99,13 +100,13 @@ const MenuSetting = () => {
             icon: menu.icon,
             id: uuidv4()
         };
-        // switch (item.type) {
-        //     case "ARCHIVE_PRODUCT":
-        //         item = {...item, slug: `/san-pham/${item.slug}`}
-        //         break;
-        //     case "ARCHIVE_ARTICLE":
-        //         break;
-        // }
+        switch (item.type) {
+            case "ARCHIVE_PRODUCT":
+                item = {...item, slug: `/san-pham/${item.slug}`}
+                break;
+            case "ARCHIVE_ARTICLE":
+                break;
+        }
         setMenuItems([...menuItems, item])
     }
     const onGetMenu = async (key = 'main') => {

@@ -1,4 +1,4 @@
-import {Button, Card, Space, Popconfirm, Image, Table, Modal, Form, Upload, Spin} from "antd";
+import {Button, Card, Space, Popconfirm, Image, Table, Modal, Form, Upload, Spin, Input} from "antd";
 import {IProduct, productStore} from "../ProductStore";
 import {observer} from "mobx-react";
 import {Key, useEffect, useState} from "react";
@@ -11,9 +11,11 @@ const Product = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [importVisible, setVisibleImport] = useState<boolean>(false);
     const [formImport] = Form.useForm();
+    const [formSearch] = Form.useForm();
     const formData = new FormData();
     const onGetList = async (params?: any) => {
-        await productStore.getList(params);
+        const searchValues = formSearch.getFieldsValue();
+        await productStore.getList({...searchValues, ...params});
     }
     const onClose = () => {
         setVisibleImport(false);
@@ -33,16 +35,25 @@ const Product = () => {
                 {name: 'Tranzi', link: '/'},
                 {name: 'Sản phẩm', link: '/product'},
             ]}/>
-            <Space className={`mb-3 text-right`}>
-                <Button onClick={() => setVisibleImport(true)}>Import</Button>
-                <Button onClick={() => setVisibleImport(true)}>Async elastic</Button>
-                <Button type={`default`} href={`/product/create`}>Thêm sản phẩm</Button>
-                <Popconfirm onConfirm={() => productStore.deleteMultiple(selectedRowKeys)} title={`Xóa sản phẩm đã chọn?`}>
-                    <Button type={`default`}>Xoá chọn</Button>
-                </Popconfirm>
-            </Space>
 
             <Spin spinning={productStore.fetching}>
+                <div className={`d-flex justify-content-between`}>
+                    <Form form={formSearch} className={`mb-3`} onFinish={onGetList} layout={`inline`}>
+                        <Form.Item name={`key`}>
+                            <Input placeholder={`Mã sản phẩm, tên sản phẩm`}/>
+                        </Form.Item>
+                        <Button htmlType={`submit`}>Tìm kiếm</Button>
+                    </Form>
+                    <Space className={`mb-3 text-right`}>
+                        <Button onClick={() => setVisibleImport(true)}>Import</Button>
+                        <Button type={`default`} href={`/product/create`}>Thêm sản phẩm</Button>
+                        <Popconfirm onConfirm={() => productStore.deleteMultiple(selectedRowKeys)}
+                                    title={`Xóa sản phẩm đã chọn?`}>
+                            <Button type={`default`}>Xoá chọn</Button>
+                        </Popconfirm>
+                    </Space>
+
+                </div>
                 <Table
                     rowKey={`id`}
                     rowSelection={{
