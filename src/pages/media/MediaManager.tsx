@@ -7,7 +7,7 @@ import {
     Form,
     Image,
     Input, message,
-    Modal, Popconfirm,
+    Modal, Pagination, Popconfirm,
     Row,
     Select,
     Space,
@@ -16,7 +16,7 @@ import {
     Tooltip,
     Upload
 } from "antd";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {IMedia, mediaStore} from "./MediaStore";
 import PopupFooter from "../../common/PopupFooter";
 import {mediaService} from "./MediaService";
@@ -57,6 +57,14 @@ const MediaManager = (props: IMediaProps) => {
         setMFolder(false);
         formFolder.resetFields();
     }
+    const removeFolder = useCallback(async () => {
+        await mediaService.removeFolder({
+            folderName: path ? path[path.length - 1] : '',
+            subPath: path
+        });
+        setPath([])
+        await onGetList()
+    }, [path])
     const onCreateFolder = async (data: any) => {
         const response = await mediaService.createFolder({
             ...data,
@@ -98,7 +106,11 @@ const MediaManager = (props: IMediaProps) => {
                             <div className={`action`}>
                                 <Space>
                                     <Button onClick={() => setMFolder(true)}>Tạo thư mục</Button>
+                                    <Popconfirm onConfirm={removeFolder} title={`Xóa thư mục hiện tại?`}>
+                                        <Button disabled={path.length === 0}>Xóa thư mục</Button>
+                                    </Popconfirm>
                                     <Popconfirm onConfirm={async () => {
+                                        setPath([])
                                         await mediaStore.delete(mediaSelected)
                                     }} title={`Xóa file đã chọn?`}>
                                         <Button disabled={mediaSelected.length == 0}>
@@ -222,6 +234,12 @@ const MediaManager = (props: IMediaProps) => {
                                             </div>
                                         </Col>
                                     })}
+                                    <Col sm={24}>
+                                        {mediaStore.page && <Pagination pageSize={mediaStore.page?.pageSize}
+                                                                        current={mediaStore.page?.current}
+                                                                        total={mediaStore.page?.total}/>}
+
+                                    </Col>
                                 </Row>
                             </div>
                         </Spin>

@@ -21,6 +21,10 @@ class MediaService {
     public createFolder(data: any) {
         return postRequest("/v1/media/createFolder", data);
     }
+
+    public removeFolder(data: any) {
+        return deleteRequest("/v1/media/deleteFolder", data);
+    }
 }
 
 export const mediaService = new MediaService();
