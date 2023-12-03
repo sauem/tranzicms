@@ -102,7 +102,7 @@ const MenuSetting = () => {
         };
         switch (item.type) {
             case "ARCHIVE_PRODUCT":
-                item = {...item, slug: `/san-pham/${item.slug}`}
+                item = {...item, slug: `/danh-muc/${item.slug}`}
                 break;
             case "ARCHIVE_ARTICLE":
                 break;
