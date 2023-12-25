@@ -62,7 +62,7 @@ const Manufacturer = () => {
                                 title: 'Hành động', dataIndex: 'id', key: 'action', render: (id, raw, index) => {
                                     return <Space>
                                         <Button size={`small`}>Sửa</Button>
-                                        <Popconfirm title={`Xóa nhà sản xuất này?`}>
+                                        <Popconfirm onConfirm={() => manufacturerStore.delete(id)} title={`Xóa nhà sản xuất này?`}>
                                             <Button size={`small`}>Xóa</Button>
                                         </Popconfirm>
                                     </Space>

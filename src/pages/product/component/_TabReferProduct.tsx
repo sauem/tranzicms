@@ -1,5 +1,4 @@
-import {Button, Col, Form, Image, Input, InputNumber, Row, Space} from "antd";
-import Helper from "../../../common/Helper";
+import {Button, Col, Form, Image, Input, Row, Space} from "antd";
 import React, {useEffect, useState} from "react";
 import ProductSelect from "../../../components/ProductSelect";
 
@@ -55,7 +54,7 @@ const TabReferProduct = (props: { form: any }) => {
                                                             width={60}
                                                             height={60}
                                                         />
-                                                        <Space direction={`vertical`}>
+                                                        <Space size='small' direction={`vertical`}>
                                                             <span>{refer[field.name]?.name}</span>
                                                             <span>{refer[field.name]?.sku}</span>
                                                         </Space>

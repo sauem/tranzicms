@@ -14,8 +14,8 @@ class ManufacturerService {
         return putRequest(`/v1/manufacturer/${mId}`, data)
     }
 
-    public delete(mId: string) {
-        return deleteRequest(`/v1/manufacturer/${mId}`)
+    public async delete(mId: string) {
+        return deleteRequest(`/v1/manufacturer/${mId}`);
     }
 }
 

@@ -54,6 +54,9 @@ const TabSameProduct = (props: { form?: any }) => {
                                                             height={60}
                                                         />
                                                         <Space direction={`vertical`}>
+                                                            <Form.Item noStyle name={[field.name, 'custom_name']}>
+                                                                <Input/>
+                                                            </Form.Item>
                                                             <span>{sameProduct[field.name]?.name}</span>
                                                             <span>{sameProduct[field.name]?.sku}</span>
                                                         </Space>

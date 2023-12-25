@@ -72,7 +72,7 @@ class ManufacturerStore {
     @action
     async delete(mId: string) {
         this.fetching = true;
-        const response = await manufacturerService.delete(mId);
+        const response: any = await manufacturerService.delete(mId);
         this.fetching = false;
         if (response.status == HttpStatusCode.SUCCESS) {
             await this.getList();
