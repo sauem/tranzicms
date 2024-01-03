@@ -155,6 +155,7 @@ const FormProduct = () => {
                             <Form.Item
                                 label={`Ảnh thumbs`}>
                                 <MediaButton
+                                    multiple
                                     init={isUpdate}
                                     field={`thumbs`}
                                     name={`thumbsId`}
