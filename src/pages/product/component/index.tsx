@@ -1,4 +1,4 @@
-import {Button, Card, Space, Popconfirm, Image, Table, Modal, Form, Upload, Spin, Input} from "antd";
+import {Button, Card, Space, Popconfirm, Image, Table, Modal, Form, Upload, Spin, Input, Tabs} from "antd";
 import {IProduct, productStore} from "../ProductStore";
 import {observer} from "mobx-react";
 import {Key, useEffect, useState} from "react";
@@ -23,7 +23,7 @@ const Product = () => {
     }
     const onFinish = async (data: any) => {
         formData.append("categoryId", data.categoryId);
-        formData.append("importType", 'UPLOAD_PRODUCT');
+        formData.append("importType", data.importType);
         await productStore.import(formData).finally(onClose)
     }
     useEffect(() => {
@@ -118,29 +118,57 @@ const Product = () => {
                     loading={productStore.acLoad}
                     formId={`import-form`}
                     showOk/>}
-                title={`Nhập sản phẩm`}>
-                <Form
-                    onFinish={onFinish}
-                    id={`import-form`}
-                    form={formImport}
-                    labelCol={{sm: 8}}
-                    labelAlign={`left`}>
-                    <Form.Item label={`Danh mục`}>
-                        <ArchiveSelect type={`PRODUCT`} name={`categoryId`}/>
-                    </Form.Item>
-                    <Form.Item label={`File sản phẩm`}>
-                        <Upload
-                            customRequest={({file, onSuccess}: any) => {
-                                formData.append("file", file)
-                                setTimeout(() => {
-                                    onSuccess("ok");
-                                }, 1000);
-                            }}
-                            multiple={false}>
-                            <Button>Chọn file</Button>
-                        </Upload>
-                    </Form.Item>
-                </Form>
+                title={`Import`}>
+                <Tabs>
+                    <Tabs.TabPane tab='Nhập sản phẩm' key='product'>
+                        <Form
+                            onFinish={onFinish}
+                            id={`import-form`}
+                            form={formImport}
+                            labelCol={{sm: 8}}
+                            labelAlign={`left`}>
+                            <Form.Item label={`Danh mục`}>
+                                <ArchiveSelect type={`PRODUCT`} name={`categoryId`}/>
+                            </Form.Item>
+                            <Form.Item hidden initialValue='UPLOAD_PRODUCT'>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item label={`File sản phẩm`}>
+                                <Upload
+                                    customRequest={({file, onSuccess}: any) => {
+                                        formData.append("file", file)
+                                        setTimeout(() => {
+                                            onSuccess("ok");
+                                        }, 1000);
+                                    }}
+                                    multiple={false}>
+                                    <Button>Chọn file</Button>
+                                </Upload>
+                            </Form.Item>
+                        </Form>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane key='price' tab='Giá sản phẩm'>
+                        <Form
+                            onFinish={onFinish}>
+                            <Form.Item hidden initialValue='UPLOAD_PRICE'>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item label={`File Giá sản phẩm`}>
+                                <Upload
+                                    customRequest={({file, onSuccess}: any) => {
+                                        formData.append("file", file)
+                                        setTimeout(() => {
+                                            onSuccess("ok");
+                                        }, 1000);
+                                    }}
+                                    multiple={false}>
+                                    <Button>Chọn file</Button>
+                                </Upload>
+                            </Form.Item>
+                            <a href={`/data/price.xlsx`}>File nhập mẫu</a>
+                        </Form>
+                    </Tabs.TabPane>
+                </Tabs>
             </Modal>
         </>
     )
