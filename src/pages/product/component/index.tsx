@@ -130,7 +130,7 @@ const Product = () => {
                             <Form.Item label={`Danh mục`}>
                                 <ArchiveSelect type={`PRODUCT`} name={`categoryId`}/>
                             </Form.Item>
-                            <Form.Item hidden initialValue='UPLOAD_PRODUCT'>
+                            <Form.Item hidden name='importType' initialValue='UPLOAD_PRODUCT'>
                                 <Input />
                             </Form.Item>
                             <Form.Item label={`File sản phẩm`}>
@@ -150,7 +150,7 @@ const Product = () => {
                     <Tabs.TabPane key='price' tab='Giá sản phẩm'>
                         <Form
                             onFinish={onFinish}>
-                            <Form.Item hidden initialValue='UPLOAD_PRICE'>
+                            <Form.Item hidden name='importType' initialValue='UPLOAD_PRICE'>
                                 <Input />
                             </Form.Item>
                             <Form.Item label={`File Giá sản phẩm`}>
