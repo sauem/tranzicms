@@ -13,7 +13,7 @@ const Product = () => {
     const [formImport] = Form.useForm();
     const [formSearch] = Form.useForm();
     const formData = new FormData();
-    const onGetList = async (params?: any) => {
+    const onGetList = async (params = {page: 0, size: 20}) => {
         const searchValues = formSearch.getFieldsValue();
         await productStore.getList({...searchValues, ...params});
     }
@@ -27,7 +27,7 @@ const Product = () => {
         await productStore.import(formData).finally(onClose)
     }
     useEffect(() => {
-        (async () => onGetList())()
+        (async () => onGetList({page: 0, size: 20}))()
     }, [])
     return (
         <>
