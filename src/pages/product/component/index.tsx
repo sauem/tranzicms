@@ -120,7 +120,7 @@ const Product = () => {
                     showOk/>}
                 title={`Import`}>
                 <Tabs onChange={(importType) => formImport.setFieldsValue({importType})}>
-                    <Tabs.TabPane tab='Nhập sản phẩm' key='UPLOAD_PRICE'>
+                    <Tabs.TabPane tab='Nhập sản phẩm' key='UPLOAD_PRODUCT'>
                         <Form
                             onFinish={onFinish}
                             id={`import-form`}
