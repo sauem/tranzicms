@@ -119,7 +119,7 @@ const Product = () => {
                     formId={`import-form`}
                     showOk/>}
                 title={`Import`}>
-                <Tabs>
+                <Tabs onChange={(importType) => formImport.setFieldsValue({importType})}>
                     <Tabs.TabPane tab='Nhập sản phẩm' key='product'>
                         <Form
                             onFinish={onFinish}
@@ -131,7 +131,7 @@ const Product = () => {
                                 <ArchiveSelect type={`PRODUCT`} name={`categoryId`}/>
                             </Form.Item>
                             <Form.Item hidden name='importType' initialValue='UPLOAD_PRODUCT'>
-                                <Input />
+                                <Input/>
                             </Form.Item>
                             <Form.Item label={`File sản phẩm`}>
                                 <Upload
@@ -149,9 +149,10 @@ const Product = () => {
                     </Tabs.TabPane>
                     <Tabs.TabPane key='price' tab='Giá sản phẩm'>
                         <Form
+                            form={formImport}
                             onFinish={onFinish}>
                             <Form.Item hidden name='importType' initialValue='UPLOAD_PRICE'>
-                                <Input />
+                                <Input/>
                             </Form.Item>
                             <Form.Item label={`File Giá sản phẩm`}>
                                 <Upload
